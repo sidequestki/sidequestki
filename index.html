@@ -44,6 +44,21 @@
     }
     .cutoff-banner strong { color: #FCD34D; }
 
+    /* Local File Security Warning Banner */
+    .file-warning-banner {
+      display: none;
+      background: #78350F;
+      border-bottom: 1px solid #B45309;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #FEF3C7;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .file-warning-banner a { color: #FDE68A; font-weight: 700; text-decoration: underline; cursor: pointer; }
+
     /* Header */
     header {
       padding: 24px 0 18px;
@@ -305,6 +320,12 @@
     <span><strong>Friday Cutoff:</strong> Submissions for next week close every <strong>Friday at 11:59 PM</strong>. Monday blast drops at 8:00 AM.</span>
   </div>
 
+  <!-- Local File Security Banner (Only shown if opened as file://) -->
+  <div id="fileBanner" class="file-warning-banner">
+    <span>⚠️</span>
+    <span>You opened this from a local folder (<code>file://</code>). Chrome blocks live Google Sheet sync from local files. <strong>Double-click <code>start.bat</code></strong> or visit <a href="http://localhost:8000">http://localhost:8000</a> to view live data!</span>
+  </div>
+
   <!-- Header -->
   <header>
     <div class="container header-inner">
@@ -394,7 +415,7 @@
         <div>🔗 <strong>Links:</strong> Ensure your Google Form/registration URL is public.</div>
         <div>💰 <strong>Cost:</strong> 100% Free standard listing for student organizations.</div>
       </div>
-      <a id="modalFormLink" href="#" target="_blank" class="btn-register" style="width: 100%;">
+      <a href="https://forms.google.com" target="_blank" class="btn-register" style="width: 100%;">
         Open Organizer Submission Form &rarr;
       </a>
     </div>
@@ -411,7 +432,7 @@
       
       <div style="display: flex; gap: 8px;">
         <button class="btn-register" onclick="saveSheetUrl()" style="flex: 1;">Save &amp; Refresh Live</button>
-        <button class="btn-cal" onclick="loadDemoEvents()" style="padding: 10px 14px;">Preview Demo Cards</button>
+        <button class="btn-cal" onclick="loadEmbeddedDemo()" style="padding: 10px 14px;">Preview Demo Cards</button>
       </div>
     </div>
   </div>
@@ -426,6 +447,11 @@
     let activeLoot = 'all';
     let searchQuery = '';
     let sheetConnected = false;
+
+    // Detect if running from local file system
+    if (window.location.protocol === 'file:') {
+      document.getElementById('fileBanner').style.display = 'flex';
+    }
 
     // Robust CSV Parser (RFC 4180 compliant)
     function parseCSV(text) {
@@ -476,7 +502,7 @@
       });
     }
 
-    // Helper to calculate weekday from date string (e.g. 2026-11-25 or 11/25/2026)
+    // Helper to calculate weekday from date string (e.g. 11/4/2026 or 2026-11-25)
     function getDayOfWeek(dateStr) {
       if (!dateStr) return 'General';
       const d = new Date(dateStr);
@@ -528,26 +554,59 @@
             return;
           }
         } catch (err) {
-          console.warn("Could not sync with Google Sheet, falling back.", err);
+          console.warn("Could not sync with Google Sheet (likely file:// CORS block):", err);
+          if (window.location.protocol === 'file:') {
+            syncText.textContent = '⚠️ file:// mode: Chrome blocked live sync. Double-click start.bat!';
+          } else {
+            syncText.textContent = '⚠️ Sheet sync error. Showing demo data.';
+          }
         }
       }
 
-      // If no sheet or error, load local fallback
-      loadDemoEvents();
+      // If fetch failed or on file://, load embedded demo cards so screen is never blank!
+      loadEmbeddedDemo();
     }
 
-    function loadDemoEvents() {
-      fetch('data/events.json')
-        .then(r => r.json())
-        .then(data => {
-          allEvents = data;
-          document.getElementById('syncText').textContent = 'Previewing Demo Data (Connect Sheet to Go Live)';
-          render();
-        })
-        .catch(() => {
-          allEvents = [];
-          render();
-        });
+    function loadEmbeddedDemo() {
+      allEvents = [
+        {
+          id: "sq-demo-1",
+          title: "AYDYN NAOKI BIN MOHD FAISOL (Sample Submission)",
+          organizer: "AVEAVQWV",
+          day: "Wednesday",
+          date: "11/4/2026",
+          time: "6:55:00 AM",
+          venue: "FDBB",
+          description: "Live preview of your Google Sheet test submission!",
+          badges: ["🎖️ Merits"],
+          registration_url: "https://forms.google.com"
+        },
+        {
+          id: "sq-demo-2",
+          title: "Figma to Code: UI/UX Masterclass",
+          organizer: "Google Developer Student Club (GDSC)",
+          day: "Wednesday",
+          date: "2026-11-25",
+          time: "2:30 PM – 5:30 PM",
+          venue: "Faculty Lab 2",
+          description: "Learn rapid UI prototyping in Figma and convert wireframes into working code.",
+          badges: ["📜 E-Certificate", "🍔 Free Refreshments", "🎖️ Activity Merit"],
+          registration_url: "https://forms.google.com"
+        },
+        {
+          id: "sq-demo-3",
+          title: "Campus 3v3 Futsal Blitz Tournament",
+          organizer: "Student Sports Council",
+          day: "Thursday",
+          date: "2026-11-26",
+          time: "8:00 PM – 11:00 PM",
+          venue: "Sports Complex Court B",
+          description: "Quick 3v3 knockout tournament. Medals, cash prizes, and merchandise.",
+          badges: ["🏆 Prizes", "🎟️ Free Entry", "🎖️ Activity Merit"],
+          registration_url: "https://forms.google.com"
+        }
+      ];
+      render();
     }
 
     // Calendar Link Generator
@@ -604,13 +663,8 @@
       });
 
       if (filtered.length === 0) {
-        if (allEvents.length === 0 && sheetConnected) {
-          emptyTitle.textContent = "✨ Google Sheet Successfully Connected!";
-          emptyDesc.innerHTML = "You have <strong>0 approved events</strong> right now.<br>Submit an event through your Google Form, change <strong>Status</strong> to <strong>APPROVED</strong> in your sheet, and refresh to see it appear here!";
-        } else {
-          emptyTitle.textContent = "No sidequests found";
-          emptyDesc.textContent = "Try searching for a different keyword or resetting your filters.";
-        }
+        emptyTitle.textContent = "No sidequests found";
+        emptyDesc.textContent = "Try searching for a different keyword or resetting your filters.";
         emptyState.style.display = 'block';
         return;
       }

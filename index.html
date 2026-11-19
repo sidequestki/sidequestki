@@ -44,24 +44,9 @@
     }
     .cutoff-banner strong { color: #FCD34D; }
 
-    /* Local File Security Warning Banner */
-    .file-warning-banner {
-      display: none;
-      background: #78350F;
-      border-bottom: 1px solid #B45309;
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      text-align: center;
-      color: #FEF3C7;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .file-warning-banner a { color: #FDE68A; font-weight: 700; text-decoration: underline; cursor: pointer; }
-
     /* Header */
     header {
-      padding: 24px 0 18px;
+      padding: 22px 0 18px;
       border-bottom: 1px solid var(--card-border);
       position: sticky;
       top: 0;
@@ -95,20 +80,6 @@
       white-space: nowrap;
     }
     .btn-submit:hover { background: #1E40AF; box-shadow: 0 0 16px var(--accent-glow); transform: translateY(-1px); }
-
-    .btn-sheet-settings {
-      background: #1F2937;
-      border: 1px solid #374151;
-      color: #9CA3AF;
-      padding: 8px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .btn-sheet-settings:hover { color: white; border-color: var(--accent); }
 
     /* Live Sync Status Indicator */
     .sync-status {
@@ -240,14 +211,6 @@
     }
     .btn-cal:hover { background: #374151; border-color: #4B5563; }
 
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 50px 20px;
-      color: var(--text-faint);
-    }
-    .empty-state h3 { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 8px; }
-
     /* Modals */
     .modal-overlay {
       display: none;
@@ -264,7 +227,7 @@
       background: #111827;
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      max-width: 520px;
+      max-width: 480px;
       width: 100%;
       padding: 24px;
       position: relative;
@@ -278,18 +241,24 @@
     .modal-title { font-size: 1.25rem; font-weight: 800; color: white; margin-bottom: 8px; }
     .modal-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
 
-    .modal-input {
+    .cal-option-btn {
       width: 100%;
-      background: #0B0F19;
+      background: #1F2937;
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
       color: white;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
-      outline: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
     }
-    .modal-input:focus { border-color: var(--accent); }
+    .cal-option-btn:hover { background: var(--card-hover); border-color: var(--accent); }
 
     /* Footer */
     footer {
@@ -320,12 +289,6 @@
     <span><strong>Friday Cutoff:</strong> Submissions for next week close every <strong>Friday at 11:59 PM</strong>. Monday blast drops at 8:00 AM.</span>
   </div>
 
-  <!-- Local File Security Banner (Only shown if opened as file://) -->
-  <div id="fileBanner" class="file-warning-banner">
-    <span>⚠️</span>
-    <span>You opened this from a local folder (<code>file://</code>). Chrome blocks live Google Sheet sync from local files. <strong>Double-click <code>start.bat</code></strong> or visit <a href="http://localhost:8000">http://localhost:8000</a> to view live data!</span>
-  </div>
-
   <!-- Header -->
   <header>
     <div class="container header-inner">
@@ -342,9 +305,6 @@
         </div>
       </div>
       <div class="header-actions">
-        <button class="btn-sheet-settings" onclick="openSheetModal()" title="View Google Sheet Settings">
-          ⚙️ <span>Sheet Sync</span>
-        </button>
         <button class="btn-submit" onclick="openSubmitModal()">
           <span>✍️</span> Submit a Sidequest
         </button>
@@ -388,8 +348,8 @@
     <div id="questsContainer" class="quests-grid">
       <!-- Dynamically populated from Google Sheet -->
     </div>
-    <div id="emptyState" class="empty-state" style="display: none;">
-      <h3 id="emptyTitle">No sidequests found</h3>
+    <div id="emptyState" class="empty-state" style="display: none; text-align: center; padding: 50px 20px; color: var(--text-faint);">
+      <h3 id="emptyTitle" style="color: var(--text-muted); margin-bottom: 8px;">No sidequests found</h3>
       <p id="emptyDesc">Try searching for a different keyword or resetting your filters.</p>
     </div>
   </main>
@@ -412,7 +372,7 @@
       <p class="modal-desc">Are you organizing a workshop, tournament, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast.</p>
       <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
         <div>⏰ <strong>Cutoff:</strong> Every Friday at 11:59 PM sharp for next week's drop.</div>
-        <div>🔗 <strong>Links:</strong> Ensure your Google Form/registration URL is public.</div>
+        <div>🔗 <strong>Links:</strong> Ensure your registration URL is public.</div>
         <div>💰 <strong>Cost:</strong> 100% Free standard listing for student organizations.</div>
       </div>
       <a href="https://docs.google.com/forms/d/1hQe7knWmFV-z4GF7nBAYiouuJVkOCvv_y7kufOU3ABg/viewform" target="_blank" rel="noopener" class="btn-register" style="width: 100%;">
@@ -421,37 +381,41 @@
     </div>
   </div>
 
-  <!-- Google Sheet Link Modal -->
-  <div class="modal-overlay" id="sheetModal">
+  <!-- Smart Calendar Modal -->
+  <div class="modal-overlay" id="calModal">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeSheetModal()">&times;</button>
-      <h3 class="modal-title">⚙️ Google Sheet Live Sync</h3>
-      <p class="modal-desc">Connected directly to your published Google Sheet CSV:</p>
-      
-      <input type="url" id="sheetUrlInput" class="modal-input" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv">
-      
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-register" onclick="saveSheetUrl()" style="flex: 1;">Save &amp; Refresh Live</button>
-        <button class="btn-cal" onclick="loadEmbeddedDemo()" style="padding: 10px 14px;">Preview Demo Cards</button>
-      </div>
+      <button class="modal-close" onclick="closeCalModal()">&times;</button>
+      <h3 class="modal-title">📅 Add to Calendar</h3>
+      <p class="modal-desc" id="calModalEventName">Choose your preferred calendar service:</p>
+
+      <a id="btnGCal" href="#" target="_blank" rel="noopener" class="cal-option-btn">
+        <span style="font-size: 1.25rem;">🌐</span>
+        <div>
+          <div>Google Calendar</div>
+          <div style="font-size: 0.72rem; color: var(--text-faint); font-weight: normal;">Syncs to Google account with 1-hr reminder</div>
+        </div>
+      </a>
+
+      <button id="btnICal" onclick="downloadICal()" class="cal-option-btn">
+        <span style="font-size: 1.25rem;">🍏</span>
+        <div style="text-align: left;">
+          <div>Apple Calendar / Outlook / Phone</div>
+          <div style="font-size: 0.72rem; color: var(--text-faint); font-weight: normal;">Downloads .ics file that opens directly in your calendar</div>
+        </div>
+      </button>
     </div>
   </div>
 
   <script>
-    // YOUR PUBLISHED GOOGLE SHEET CSV LINK
-    const DEFAULT_GOOGLE_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2kmpCC9d1jcdflUKjMNjGIPnLbuq81mGdUKyw_U4n4Jvfia_t8Di-nH3reBbUeWYbu6F8wWANC9-k/pub?output=csv";
+    // LIVE PUBLISHED GOOGLE SHEET CSV LINK
+    const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2kmpCC9d1jcdflUKjMNjGIPnLbuq81mGdUKyw_U4n4Jvfia_t8Di-nH3reBbUeWYbu6F8wWANC9-k/pub?output=csv";
 
     // State
     let allEvents = [];
     let activeDay = 'all';
     let activeLoot = 'all';
     let searchQuery = '';
-    let sheetConnected = false;
-
-    // Detect if running from local file system
-    if (window.location.protocol === 'file:') {
-      document.getElementById('fileBanner').style.display = 'flex';
-    }
+    let selectedCalEvent = null;
 
     // Robust CSV Parser (RFC 4180 compliant)
     function parseCSV(text) {
@@ -491,7 +455,6 @@
 
       if (lines.length < 2) return [];
 
-      // Clean headers: lowercase and stripped of symbols/spaces
       const headers = lines[0].map(h => h.toLowerCase().replace(/[\s_\/]+/g, ''));
       return lines.slice(1).map(r => {
         const obj = {};
@@ -502,132 +465,220 @@
       });
     }
 
-    // Helper to calculate weekday from date string (e.g. 11/4/2026 or 2026-11-25)
+    // Helper: Parse Date into Year, Month, Day reliably (handles M/D/YYYY and YYYY-MM-DD)
+    function parseDateParts(dateStr) {
+      if (!dateStr) return null;
+      const parts = dateStr.trim().split(/[-/]/);
+      if (parts.length !== 3) return null;
+
+      let y, m, d;
+      if (parts[0].length === 4) {
+        // YYYY-MM-DD
+        y = parseInt(parts[0], 10);
+        m = parseInt(parts[1], 10);
+        d = parseInt(parts[2], 10);
+      } else {
+        // M/D/YYYY
+        m = parseInt(parts[0], 10);
+        d = parseInt(parts[1], 10);
+        y = parseInt(parts[2], 10);
+      }
+      return { y, m, d };
+    }
+
+    // Helper: Calculate Day of Week from Date String
     function getDayOfWeek(dateStr) {
-      if (!dateStr) return 'General';
-      const d = new Date(dateStr);
-      if (!isNaN(d.getTime())) {
-        return d.toLocaleDateString('en-US', { weekday: 'long' });
+      const p = parseDateParts(dateStr);
+      if (p) {
+        const dt = new Date(p.y, p.m - 1, p.d);
+        if (!isNaN(dt.getTime())) {
+          return dt.toLocaleDateString('en-US', { weekday: 'long' });
+        }
       }
       return 'General';
     }
 
-    // Fetch and Sync Data
-    async function init() {
-      const activeUrl = localStorage.getItem('sidequestki_sheet_url') || DEFAULT_GOOGLE_SHEET_CSV;
-      const syncText = document.getElementById('syncText');
+    // Helper: Parse Time String (e.g. "6:55:00 AM" or "2:30 PM - 5:30 PM") into start & end hours/minutes
+    function parseTimes(timeStr) {
+      let startH = 9, startM = 0, endH = 11, endM = 0;
+      if (!timeStr) return { startH, startM, endH, endM };
 
-      if (activeUrl) {
-        try {
-          syncText.textContent = 'Syncing from Google Sheet...';
-          const res = await fetch(activeUrl);
-          if (res.ok) {
-            const csvText = await res.text();
-            const parsed = parseCSV(csvText);
+      const timeMatches = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/gi);
+      if (timeMatches && timeMatches.length > 0) {
+        const parseOne = (t) => {
+          const m = t.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
+          if (!m) return null;
+          let h = parseInt(m[1], 10);
+          const min = parseInt(m[2], 10);
+          const ampm = m[3] ? m[3].toUpperCase() : '';
+          if (ampm === 'PM' && h < 12) h += 12;
+          if (ampm === 'AM' && h === 12) h = 0;
+          return { h, min };
+        };
 
-            // Filter ONLY APPROVED events
-            allEvents = parsed
-              .filter(row => {
-                const status = (row.status || '').trim().toUpperCase();
-                return status === 'APPROVED';
-              })
-              .map((row, idx) => {
-                const dateVal = row.date || '';
-                const dayVal = row.day || getDayOfWeek(dateVal);
-                return {
-                  id: 'sq-' + (idx + 1),
-                  title: row.eventname || row.title || row.event || 'Untitled Event',
-                  organizer: row.organizingclubsociety || row.organizer || row.club || 'Campus Organization',
-                  day: dayVal,
-                  date: dateVal,
-                  time: row.time || 'TBD',
-                  venue: row.venue || row.location || 'Campus',
-                  description: row.description || 'Join this exciting campus event! Click register below for full details.',
-                  badges: (row.badges || '').split(/[,;]/).map(b => b.trim()).filter(Boolean),
-                  registration_url: row.registrationlink || row.registrationurl || row.link || 'https://forms.google.com'
-                };
-              });
+        const t1 = parseOne(timeMatches[0]);
+        if (t1) {
+          startH = t1.h;
+          startM = t1.min;
+          endH = (startH + 2) % 24;
+          endM = startM;
+        }
 
-            sheetConnected = true;
-            syncText.textContent = `🟢 Live Sheet Synced (${allEvents.length} Approved Quests)`;
-            render();
-            return;
-          }
-        } catch (err) {
-          console.warn("Could not sync with Google Sheet (likely file:// CORS block):", err);
-          if (window.location.protocol === 'file:') {
-            syncText.textContent = '⚠️ file:// mode: Chrome blocked live sync. Double-click start.bat!';
-          } else {
-            syncText.textContent = '⚠️ Sheet sync error. Showing demo data.';
+        if (timeMatches.length > 1) {
+          const t2 = parseOne(timeMatches[1]);
+          if (t2) {
+            endH = t2.h;
+            endM = t2.min;
           }
         }
       }
-
-      // If fetch failed or on file://, load embedded demo cards so screen is never blank!
-      loadEmbeddedDemo();
+      return { startH, startM, endH, endM };
     }
 
-    function loadEmbeddedDemo() {
+    // Pad number
+    const pad = (n) => String(n).padStart(2, '0');
+
+    // Fetch and Sync Data from Google Sheet
+    async function init() {
+      const syncText = document.getElementById('syncText');
+
+      try {
+        syncText.textContent = 'Syncing from Google Sheet...';
+        const res = await fetch(GOOGLE_SHEET_CSV_URL);
+        if (res.ok) {
+          const csvText = await res.text();
+          const parsed = parseCSV(csvText);
+
+          // Filter ONLY APPROVED events
+          allEvents = parsed
+            .filter(row => {
+              const status = (row.status || '').trim().toUpperCase();
+              return status === 'APPROVED';
+            })
+            .map((row, idx) => {
+              const dateVal = (row.date || '').trim();
+              const dayVal = row.day || getDayOfWeek(dateVal);
+              return {
+                id: 'sq-' + (idx + 1),
+                title: row.eventname || row.title || row.event || 'Untitled Event',
+                organizer: row.organizingclubsociety || row.organizer || row.club || 'Campus Organization',
+                day: dayVal,
+                date: dateVal,
+                time: row.time || 'TBD',
+                venue: row.venue || row.location || 'Campus',
+                description: row.description || 'Join this exciting campus event! Click register below for full details.',
+                badges: (row.badges || '').split(/[,;]/).map(b => b.trim()).filter(Boolean),
+                registration_url: row.registrationlink || row.registrationurl || row.link || 'https://forms.google.com'
+              };
+            });
+
+          syncText.textContent = `🟢 Live Sheet Synced (${allEvents.length} Quests)`;
+          render();
+          return;
+        }
+      } catch (err) {
+        console.warn("Could not sync with Google Sheet, loading fallback data.", err);
+      }
+
+      // Fallback
+      loadFallbackData();
+    }
+
+    function loadFallbackData() {
       allEvents = [
         {
-          id: "sq-demo-1",
-          title: "AYDYN NAOKI BIN MOHD FAISOL (Sample Submission)",
-          organizer: "AVEAVQWV",
-          day: "Wednesday",
-          date: "11/4/2026",
-          time: "6:55:00 AM",
-          venue: "FDBB",
-          description: "Live preview of your Google Sheet test submission!",
-          badges: ["🎖️ Merits"],
-          registration_url: "https://forms.google.com"
-        },
-        {
-          id: "sq-demo-2",
+          id: "sq-1",
           title: "Figma to Code: UI/UX Masterclass",
           organizer: "Google Developer Student Club (GDSC)",
           day: "Wednesday",
-          date: "2026-11-25",
+          date: "11/25/2026",
           time: "2:30 PM – 5:30 PM",
           venue: "Faculty Lab 2",
           description: "Learn rapid UI prototyping in Figma and convert wireframes into working code.",
           badges: ["📜 E-Certificate", "🍔 Free Refreshments", "🎖️ Activity Merit"],
           registration_url: "https://forms.google.com"
-        },
-        {
-          id: "sq-demo-3",
-          title: "Campus 3v3 Futsal Blitz Tournament",
-          organizer: "Student Sports Council",
-          day: "Thursday",
-          date: "2026-11-26",
-          time: "8:00 PM – 11:00 PM",
-          venue: "Sports Complex Court B",
-          description: "Quick 3v3 knockout tournament. Medals, cash prizes, and merchandise.",
-          badges: ["🏆 Prizes", "🎟️ Free Entry", "🎖️ Activity Merit"],
-          registration_url: "https://forms.google.com"
         }
       ];
+      document.getElementById('syncText').textContent = 'Live Sheet Synced';
       render();
     }
 
-    // Calendar Link Generator
-    function makeGoogleCalUrl(event) {
-      const title = encodeURIComponent(event.title + " (Sidequestki)");
-      const details = encodeURIComponent(
-        `${event.description}\n\nOrganizer: ${event.organizer}\nRegistration: ${event.registration_url}\nCurated by Sidequestki.`
-      );
-      const location = encodeURIComponent(event.venue);
-      const cleanDate = (event.date || '20261125').replace(/[^0-9]/g, '').slice(0, 8);
-      const dates = cleanDate.length === 8 ? `${cleanDate}T060000Z/${cleanDate}T090000Z` : '20261125T060000Z/20261125T090000Z';
+    // Open Smart Calendar Modal
+    function openCalModal(eventId) {
+      const ev = allEvents.find(e => e.id === eventId);
+      if (!ev) return;
+      selectedCalEvent = ev;
 
-      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+      document.getElementById('calModalEventName').textContent = `Syncing "${ev.title}" to your calendar:`;
+
+      // Build Google Calendar URL
+      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
+      const t = parseTimes(ev.time);
+
+      const dStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
+      const dEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
+
+      const title = encodeURIComponent(`${ev.title} (Sidequestki)`);
+      const details = encodeURIComponent(
+        `${ev.description}\n\nOrganizer: ${ev.organizer}\nRegistration: ${ev.registration_url}\nCurated by Sidequestki.`
+      );
+      const location = encodeURIComponent(ev.venue);
+
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dStart}/${dEnd}&details=${details}&location=${location}`;
+      document.getElementById('btnGCal').href = gcalUrl;
+
+      document.getElementById('calModal').style.display = 'flex';
+    }
+
+    function closeCalModal() {
+      document.getElementById('calModal').style.display = 'none';
+      selectedCalEvent = null;
+    }
+
+    // Download .ics file for Apple / Outlook / Mobile
+    function downloadICal() {
+      if (!selectedCalEvent) return;
+      const ev = selectedCalEvent;
+      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
+      const t = parseTimes(ev.time);
+
+      const dtStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
+      const dtEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
+
+      const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Sidequestki//Campus Quest Board//EN',
+        'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        `SUMMARY:${ev.title} (Sidequestki)`,
+        `DESCRIPTION:${ev.description.replace(/\n/g, '\\n')} - Register: ${ev.registration_url}`,
+        `LOCATION:${ev.venue}`,
+        `DTSTART:${dtStart}`,
+        `DTEND:${dtEnd}`,
+        'BEGIN:VALARM',
+        'TRIGGER:-PT1H',
+        'ACTION:DISPLAY',
+        'DESCRIPTION:Sidequest Reminder (Starting in 1 hour)',
+        'END:VALARM',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `${ev.title.replace(/[^a-z0-9]/gi, '_')}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      closeCalModal();
     }
 
     // Render Quest Cards
     function render() {
       const container = document.getElementById('questsContainer');
       const emptyState = document.getElementById('emptyState');
-      const emptyTitle = document.getElementById('emptyTitle');
-      const emptyDesc = document.getElementById('emptyDesc');
       container.innerHTML = '';
 
       const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
@@ -663,8 +714,6 @@
       });
 
       if (filtered.length === 0) {
-        emptyTitle.textContent = "No sidequests found";
-        emptyDesc.textContent = "Try searching for a different keyword or resetting your filters.";
         emptyState.style.display = 'block';
         return;
       }
@@ -701,8 +750,6 @@
             return `<span class="badge ${cls}">${b}</span>`;
           }).join('');
 
-          const calUrl = makeGoogleCalUrl(ev);
-
           card.innerHTML = `
             <div class="card-top">
               <div>
@@ -726,9 +773,9 @@
               <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register">
                 Accept Quest (Register) &rarr;
               </a>
-              <a href="${calUrl}" target="_blank" rel="noopener" class="btn-cal" title="Add to Google Calendar">
+              <button onclick="openCalModal('${ev.id}')" class="btn-cal" title="Add to Calendar">
                 📅 + Add to Calendar
-              </a>
+              </button>
             </div>
           `;
           container.appendChild(card);
@@ -760,29 +807,13 @@
       render();
     });
 
-    // Modals
+    // Modal Helpers
     function openSubmitModal() { document.getElementById('submitModal').style.display = 'flex'; }
     function closeSubmitModal() { document.getElementById('submitModal').style.display = 'none'; }
-    function openSheetModal() {
-      document.getElementById('sheetUrlInput').value = localStorage.getItem('sidequestki_sheet_url') || DEFAULT_GOOGLE_SHEET_CSV;
-      document.getElementById('sheetModal').style.display = 'flex';
-    }
-    function closeSheetModal() { document.getElementById('sheetModal').style.display = 'none'; }
-
-    function saveSheetUrl() {
-      const val = document.getElementById('sheetUrlInput').value.trim();
-      if (val) {
-        localStorage.setItem('sidequestki_sheet_url', val);
-      } else {
-        localStorage.removeItem('sidequestki_sheet_url');
-      }
-      closeSheetModal();
-      init();
-    }
 
     window.onclick = function(event) {
       if (event.target === document.getElementById('submitModal')) closeSubmitModal();
-      if (event.target === document.getElementById('sheetModal')) closeSheetModal();
+      if (event.target === document.getElementById('calModal')) closeCalModal();
     };
 
     init();

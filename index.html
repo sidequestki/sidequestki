@@ -20,37 +20,14 @@
       --accent: #3B82F6;
       --accent-glow: rgba(59, 130, 246, 0.25);
       --accent-hover: #2563EB;
-      --badge-gold: #F59E0B;
-      --badge-gold-bg: rgba(245, 158, 11, 0.12);
-      --badge-green: #10B981;
-      --badge-green-bg: rgba(16, 185, 129, 0.12);
-      --badge-purple: #8B5CF6;
-      --badge-purple-bg: rgba(139, 92, 246, 0.12);
+      --badge-food: #F59E0B;
+      --badge-merit: #10B981;
+      --badge-cert: #8B5CF6;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.5;
-    }
-
-    /* Container */
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; line-height: 1.5; }
+    .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 16px; }
 
     /* Top Announcement Bar */
     .cutoff-banner {
@@ -65,65 +42,32 @@
       justify-content: center;
       gap: 8px;
     }
-    .cutoff-banner strong {
-      color: #FCD34D;
-    }
+    .cutoff-banner strong { color: #FCD34D; }
 
     /* Header */
     header {
-      padding: 28px 0 20px;
+      padding: 24px 0 18px;
       border-bottom: 1px solid var(--card-border);
       position: sticky;
       top: 0;
-      background: rgba(11, 15, 25, 0.92);
+      background: rgba(11, 15, 25, 0.94);
       backdrop-filter: blur(12px);
       z-index: 50;
     }
 
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+    .brand-group { display: flex; flex-direction: column; gap: 2px; }
+    .brand-title { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.03em; color: #FFFFFF; display: flex; align-items: center; gap: 8px; }
+    .brand-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 9999px; background: var(--accent); color: white; }
+    .brand-subtitle { font-size: 0.8rem; color: var(--text-muted); }
 
-    .brand-group {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      background: var(--accent);
-      color: white;
-      letter-spacing: 0.05em;
-    }
-
-    .brand-subtitle {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
 
     .btn-submit {
       background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 8px 16px;
+      padding: 8px 14px;
       font-size: 0.82rem;
       font-weight: 600;
       border-radius: 10px;
@@ -135,25 +79,36 @@
       text-decoration: none;
       white-space: nowrap;
     }
+    .btn-submit:hover { background: #1E40AF; box-shadow: 0 0 16px var(--accent-glow); transform: translateY(-1px); }
 
-    .btn-submit:hover {
-      background: #1E40AF;
-      box-shadow: 0 0 16px var(--accent-glow);
-      transform: translateY(-1px);
+    .btn-sheet-settings {
+      background: #1F2937;
+      border: 1px solid #374151;
+      color: #9CA3AF;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
+    .btn-sheet-settings:hover { color: white; border-color: var(--accent); }
+
+    /* Live Sync Status Indicator */
+    .sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: #10B981;
+      margin-top: 4px;
+    }
+    .sync-dot { width: 7px; height: 7px; background: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981; }
 
     /* Controls: Search & Filters */
-    .controls-section {
-      padding: 20px 0 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .search-wrapper {
-      position: relative;
-    }
-
+    .controls-section { padding: 18px 0 12px; display: flex; flex-direction: column; gap: 12px; }
+    .search-wrapper { position: relative; }
     .search-input {
       width: 100%;
       background: var(--card-bg);
@@ -165,33 +120,12 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
-    .search-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-faint);
-      font-size: 0.95rem;
-    }
+    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-faint); font-size: 0.95rem; }
 
     /* Filter pills */
-    .pill-group {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-    .pill-group::-webkit-scrollbar {
-      display: none;
-    }
-
+    .pill-group { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+    .pill-group::-webkit-scrollbar { display: none; }
     .pill {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -205,28 +139,13 @@
       transition: all 0.15s ease;
       user-select: none;
     }
-
-    .pill:hover {
-      background: var(--card-hover);
-      color: var(--text-main);
-      border-color: #374151;
-    }
-
-    .pill.active {
-      background: var(--accent);
-      color: #FFFFFF;
-      border-color: var(--accent);
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
+    .pill:hover { background: var(--card-hover); color: var(--text-main); border-color: #374151; }
+    .pill.active { background: var(--accent); color: #FFFFFF; border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
 
     /* Quests List */
-    .quests-section {
-      flex: 1;
-      padding: 10px 0 40px;
-    }
-
+    .quests-section { flex: 1; padding: 10px 0 40px; }
     .day-header {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #93C5FD;
       text-transform: uppercase;
@@ -236,19 +155,8 @@
       align-items: center;
       gap: 10px;
     }
-
-    .day-header::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--card-border);
-    }
-
-    .quests-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .day-header::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+    .quests-grid { display: flex; flex-direction: column; gap: 14px; }
 
     /* Quest Card */
     .quest-card {
@@ -260,101 +168,27 @@
       flex-direction: column;
       gap: 12px;
       transition: all 0.2s ease;
-      position: relative;
     }
+    .quest-card:hover { border-color: #374151; background: var(--card-hover); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); transform: translateY(-1px); }
 
-    .quest-card:hover {
-      border-color: #374151;
-      background: var(--card-hover);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-      transform: translateY(-1px);
-    }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .organizer-label { font-size: 0.75rem; font-weight: 600; color: #60A5FA; text-transform: uppercase; letter-spacing: 0.04em; }
+    .quest-title { font-size: 1.15rem; font-weight: 700; color: #FFFFFF; line-height: 1.35; margin-top: 2px; }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-    }
+    .time-venue-row { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: var(--text-muted); }
+    .info-item { display: flex; align-items: center; gap: 5px; }
 
-    .organizer-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #60A5FA;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .quest-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      line-height: 1.35;
-      margin-top: 2px;
-    }
-
-    .time-venue-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .info-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .quest-desc {
-      font-size: 0.85rem;
-      color: #CBD5E1;
-      line-height: 1.45;
-    }
+    .quest-desc { font-size: 0.85rem; color: #CBD5E1; line-height: 1.45; }
 
     /* Badges Row */
-    .badges-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #E2E8F0;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .badge-food {
-      background: rgba(245, 158, 11, 0.12);
-      color: #FCD34D;
-      border-color: rgba(245, 158, 11, 0.25);
-    }
-
-    .badge-merit {
-      background: rgba(16, 185, 129, 0.12);
-      color: #6EE7B7;
-      border-color: rgba(16, 185, 129, 0.25);
-    }
-
-    .badge-cert {
-      background: rgba(139, 92, 246, 0.12);
-      color: #C4B5FD;
-      border-color: rgba(139, 92, 246, 0.25);
-    }
+    .badges-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge { font-size: 0.72rem; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: #E2E8F0; border: 1px solid rgba(255, 255, 255, 0.08); }
+    .badge-food { background: rgba(245, 158, 11, 0.12); color: #FCD34D; border-color: rgba(245, 158, 11, 0.25); }
+    .badge-merit { background: rgba(16, 185, 129, 0.12); color: #6EE7B7; border-color: rgba(16, 185, 129, 0.25); }
+    .badge-cert { background: rgba(139, 92, 246, 0.12); color: #C4B5FD; border-color: rgba(139, 92, 246, 0.25); }
 
     /* Card Actions */
-    .card-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
+    .card-actions { display: flex; gap: 10px; margin-top: 4px; }
     .btn-register {
       flex: 1;
       background: var(--accent);
@@ -371,10 +205,7 @@
       align-items: center;
       gap: 6px;
     }
-
-    .btn-register:hover {
-      background: var(--accent-hover);
-    }
+    .btn-register:hover { background: var(--accent-hover); }
 
     .btn-cal {
       background: #1F2937;
@@ -392,122 +223,69 @@
       text-decoration: none;
       white-space: nowrap;
     }
+    .btn-cal:hover { background: #374151; border-color: #4B5563; }
 
-    .btn-cal:hover {
-      background: #374151;
-      border-color: #4B5563;
-    }
-
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 50px 20px;
-      color: var(--text-faint);
-    }
-    .empty-state h3 {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    /* Modal */
+    /* Modals */
     .modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(5px);
       z-index: 100;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
-
     .modal-box {
       background: #111827;
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       padding: 24px;
       position: relative;
     }
-
     .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: none;
-      color: var(--text-faint);
-      font-size: 1.2rem;
-      cursor: pointer;
+      top: 16px; right: 16px;
+      background: none; border: none;
+      color: var(--text-faint); font-size: 1.3rem; cursor: pointer;
     }
+    .modal-title { font-size: 1.25rem; font-weight: 800; color: white; margin-bottom: 8px; }
+    .modal-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
 
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: white;
-      margin-bottom: 8px;
-    }
-
-    .modal-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
-
-    .modal-rules {
-      background: rgba(255, 255, 255, 0.03);
+    .modal-input {
+      width: 100%;
+      background: #0B0F19;
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 20px;
-      font-size: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      padding: 10px 12px;
+      color: white;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      outline: none;
     }
-
-    .modal-rules li {
-      margin-left: 16px;
-      color: #CBD5E1;
-    }
+    .modal-input:focus { border-color: var(--accent); }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--card-border);
-      padding: 30px 0;
+      padding: 26px 0;
       background: #080B12;
       font-size: 0.78rem;
       color: var(--text-faint);
       text-align: center;
       margin-top: auto;
     }
-
-    .footer-disclaimer {
-      max-width: 650px;
-      margin: 8px auto 0;
-      line-height: 1.45;
-      color: #6B7280;
-    }
+    .footer-disclaimer { max-width: 650px; margin: 8px auto 0; line-height: 1.45; color: #6B7280; }
 
     @media (max-width: 600px) {
-      .header-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .btn-submit {
-        width: 100%;
-        justify-content: center;
-      }
-      .card-actions {
-        flex-direction: column;
-      }
-      .btn-cal {
-        justify-content: center;
-      }
+      .header-inner { flex-direction: column; align-items: flex-start; }
+      .header-actions { width: 100%; }
+      .btn-submit { flex: 1; justify-content: center; }
+      .card-actions { flex-direction: column; }
+      .btn-cal { justify-content: center; }
     }
   </style>
 </head>
@@ -529,10 +307,19 @@
           <span class="brand-badge">WEEK 5 DROP</span>
         </div>
         <p class="brand-subtitle">Your weekly campus quest board. Discover workshops, sports & free makan.</p>
+        <div class="sync-status">
+          <span class="sync-dot"></span>
+          <span id="syncText">Connected to Live Google Sheet</span>
+        </div>
       </div>
-      <button class="btn-submit" onclick="openSubmitModal()">
-        <span>✍️</span> Submit a Sidequest
-      </button>
+      <div class="header-actions">
+        <button class="btn-sheet-settings" onclick="openSheetModal()" title="Connect Google Sheet">
+          ⚙️ <span>Sheet Sync</span>
+        </button>
+        <button class="btn-submit" onclick="openSubmitModal()">
+          <span>✍️</span> Submit a Sidequest
+        </button>
+      </div>
     </div>
   </header>
 
@@ -548,6 +335,8 @@
     <div class="pill-group" id="dayPills">
       <button class="pill active" data-filter="all">All Quests</button>
       <button class="pill" data-filter="today">Today</button>
+      <button class="pill" data-filter="Monday">Mon</button>
+      <button class="pill" data-filter="Tuesday">Tue</button>
       <button class="pill" data-filter="Wednesday">Wed</button>
       <button class="pill" data-filter="Thursday">Thu</button>
       <button class="pill" data-filter="Friday">Fri</button>
@@ -558,20 +347,20 @@
     <!-- Loot Filter Pills -->
     <div class="pill-group" id="lootPills">
       <button class="pill active" data-loot="all">All Perks</button>
-      <button class="pill" data-loot="🍔 Free Refreshments">🍔 Free Makan</button>
-      <button class="pill" data-loot="🎖️ Activity Merit">🎖️ Merits</button>
-      <button class="pill" data-loot="📜 E-Certificate">📜 E-Cert</button>
-      <button class="pill" data-loot="🎟️ Free Entry">🎟️ Free Entry</button>
+      <button class="pill" data-loot="Food">🍔 Free Makan</button>
+      <button class="pill" data-loot="Merit">🎖️ Merits</button>
+      <button class="pill" data-loot="Cert">📜 E-Cert</button>
+      <button class="pill" data-loot="Free Entry">🎟️ Free Entry</button>
     </div>
   </div>
 
   <!-- Quests Container -->
   <main class="container quests-section">
     <div id="questsContainer" class="quests-grid">
-      <!-- Dynamically populated -->
+      <!-- Dynamically populated from Google Sheet / JSON -->
     </div>
-    <div id="emptyState" class="empty-state" style="display: none;">
-      <h3>No sidequests found</h3>
+    <div id="emptyState" class="empty-state" style="display: none; text-align: center; padding: 40px 20px; color: var(--text-faint);">
+      <h3 style="color: var(--text-muted); margin-bottom: 6px;">No sidequests found</h3>
       <p>Try searching for a different keyword or resetting your filters.</p>
     </div>
   </main>
@@ -579,7 +368,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p><strong>SIDEQUESTKI</strong> &bull; Independent Campus Event Curation &bull; Powered by Google Sheets</p>
+      <p><strong>SIDEQUESTKI</strong> &bull; Independent Campus Event Curation &bull; Powered by Google Sheets Live</p>
       <p class="footer-disclaimer">
         Disclaimer: Sidequestki is an independent student event directory. We are not responsible for event cancellations, venue updates, or ticketing operations managed by external organizers. For specific inquiries, please contact the listed club PIC directly.
       </p>
@@ -591,27 +380,136 @@
     <div class="modal-box">
       <button class="modal-close" onclick="closeSubmitModal()">&times;</button>
       <h3 class="modal-title">List Your Sidequest ⚔️</h3>
-      <p class="modal-desc">Are you organizing a workshop, competition, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast.</p>
-      <ul class="modal-rules">
-        <li><strong>Cutoff:</strong> Every Friday at 11:59 PM sharp for next week's drop.</li>
-        <li><strong>Links:</strong> Ensure your Google Form/registration URL is public.</li>
-        <li><strong>Cost:</strong> 100% Free standard listing for student organizations.</li>
-      </ul>
+      <p class="modal-desc">Are you organizing a workshop, tournament, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast.</p>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
+        <div>⏰ <strong>Cutoff:</strong> Every Friday at 11:59 PM sharp for next week's drop.</div>
+        <div>🔗 <strong>Links:</strong> Ensure your Google Form/registration URL is public.</div>
+        <div>💰 <strong>Cost:</strong> 100% Free standard listing for student organizations.</div>
+      </div>
       <a href="https://forms.google.com" target="_blank" class="btn-register" style="width: 100%;">
         Open Organizer Submission Form &rarr;
       </a>
     </div>
   </div>
 
+  <!-- Google Sheet Link Modal -->
+  <div class="modal-overlay" id="sheetModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeSheetModal()">&times;</button>
+      <h3 class="modal-title">⚙️ Connect Your Google Sheet</h3>
+      <p class="modal-desc">Paste your published Google Sheet CSV link below to sync your events live with zero code:</p>
+      
+      <input type="url" id="sheetUrlInput" class="modal-input" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv">
+      
+      <div style="font-size: 0.78rem; color: var(--text-faint); margin-bottom: 16px; line-height: 1.45;">
+        <strong>How to get this link:</strong> In Google Sheets, click <em>File &rarr; Share &rarr; Publish to web</em>, select <em>Entire Document / Sheet</em> as <strong>Comma-separated values (.csv)</strong>, and click <strong>Publish</strong>.
+      </div>
+      
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-register" onclick="saveSheetUrl()" style="flex: 1;">Connect &amp; Sync Now</button>
+        <button class="btn-cal" onclick="resetToDemo()" style="padding: 10px 14px;">Reset Demo Data</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Config: Paste your permanent Google Sheet CSV link here, or paste it in the in-app modal!
+    const DEFAULT_GOOGLE_SHEET_CSV = ""; 
+
     // State
     let allEvents = [];
     let activeDay = 'all';
     let activeLoot = 'all';
     let searchQuery = '';
 
-    // Load Events Data
+    // CSV to JSON Parser (Handles commas, quotes, line breaks)
+    function parseCSV(text) {
+      const lines = [];
+      let row = [];
+      let inQuotes = false;
+      let curr = '';
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (c === '"') {
+          if (inQuotes && next === '"') {
+            curr += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (c === ',' && !inQuotes) {
+          row.push(curr.trim());
+          curr = '';
+        } else if ((c === '\r' || c === '\n') && !inQuotes) {
+          if (c === '\r' && next === '\n') i++;
+          row.push(curr.trim());
+          if (row.length > 1 || row[0] !== '') lines.push(row);
+          row = [];
+          curr = '';
+        } else {
+          curr += c;
+        }
+      }
+      if (curr || row.length > 0) {
+        row.push(curr.trim());
+        lines.push(row);
+      }
+
+      if (lines.length < 2) return [];
+
+      const headers = lines[0].map(h => h.toLowerCase().replace(/[\s_]+/g, ''));
+      return lines.slice(1).map(r => {
+        const obj = {};
+        headers.forEach((h, idx) => {
+          obj[h] = r[idx] || '';
+        });
+        return obj;
+      });
+    }
+
+    // Load Events Data (Google Sheet -> Fallback to Local JSON)
     async function init() {
+      const savedSheetUrl = localStorage.getItem('sidequestki_sheet_url') || DEFAULT_GOOGLE_SHEET_CSV;
+      const syncText = document.getElementById('syncText');
+
+      if (savedSheetUrl) {
+        try {
+          syncText.textContent = 'Syncing from Google Sheet...';
+          const res = await fetch(savedSheetUrl);
+          if (res.ok) {
+            const csvText = await res.text();
+            const parsed = parseCSV(csvText);
+            
+            // Map columns cleanly
+            allEvents = parsed
+              .filter(row => !row.status || row.status.toUpperCase() === 'APPROVED')
+              .map((row, idx) => ({
+                id: 'sq-' + (idx + 1),
+                title: row.title || row.eventname || row.event || 'Untitled Event',
+                organizer: row.organizer || row.club || row.society || 'Student Club',
+                day: row.day || 'General',
+                date: row.date || '2026-11-25',
+                time: row.time || row.timeslot || 'TBD',
+                venue: row.venue || row.location || 'Campus',
+                description: row.description || row.pitch || '',
+                badges: (row.badges || row.perks || row.loot || '').split(/[,;]/).map(b => b.trim()).filter(Boolean),
+                registration_url: row.registrationurl || row.registration || row.link || 'https://forms.google.com'
+              }));
+            
+            syncText.textContent = `Live Google Sheet Synced (${allEvents.length} Quests)`;
+            render();
+            return;
+          }
+        } catch (err) {
+          console.warn("Could not load from Google Sheet, falling back to local data.", err);
+        }
+      }
+
+      // Fallback to local events.json
+      syncText.textContent = 'Local Demo Mode (Click Sheet Sync to connect Google Sheet)';
       try {
         const response = await fetch('data/events.json');
         if (response.ok) {
@@ -632,36 +530,33 @@
         `${event.description}\n\nOrganizer: ${event.organizer}\nRegistration: ${event.registration_url}\nCurated by Sidequestki.`
       );
       const location = encodeURIComponent(event.venue);
-
-      // Simple single-day all-day or rough ISO format
-      // Format: YYYYMMDDTHHMMSS
       const cleanDate = (event.date || '20261125').replace(/-/g, '');
       const dates = `${cleanDate}T060000Z/${cleanDate}T090000Z`;
 
       return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
     }
 
-    // Render Quest Cards
+    // Render Cards
     function render() {
       const container = document.getElementById('questsContainer');
       const emptyState = document.getElementById('emptyState');
       container.innerHTML = '';
 
+      const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+
       const filtered = allEvents.filter(ev => {
         // Day filter
         if (activeDay !== 'all') {
           if (activeDay === 'today') {
-            // Check day name or today match
-            const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-            if (ev.day !== todayName) return false;
-          } else if (ev.day !== activeDay) {
+            if ((ev.day || '').toLowerCase() !== todayName.toLowerCase()) return false;
+          } else if ((ev.day || '').toLowerCase() !== activeDay.toLowerCase()) {
             return false;
           }
         }
 
         // Loot filter
         if (activeLoot !== 'all') {
-          if (!ev.badges || !ev.badges.some(b => b.includes(activeLoot.replace(/^[^\w]+/, '').trim()))) {
+          if (!ev.badges || !ev.badges.some(b => b.toLowerCase().includes(activeLoot.toLowerCase()))) {
             return false;
           }
         }
@@ -669,10 +564,10 @@
         // Search query
         if (searchQuery) {
           const q = searchQuery.toLowerCase();
-          const matchTitle = ev.title.toLowerCase().includes(q);
-          const matchOrg = ev.organizer.toLowerCase().includes(q);
-          const matchVenue = ev.venue.toLowerCase().includes(q);
-          const matchDesc = ev.description.toLowerCase().includes(q);
+          const matchTitle = (ev.title || '').toLowerCase().includes(q);
+          const matchOrg = (ev.organizer || '').toLowerCase().includes(q);
+          const matchVenue = (ev.venue || '').toLowerCase().includes(q);
+          const matchDesc = (ev.description || '').toLowerCase().includes(q);
           if (!matchTitle && !matchOrg && !matchVenue && !matchDesc) return false;
         }
 
@@ -686,7 +581,7 @@
       emptyState.style.display = 'none';
 
       // Group by Day
-      const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'General'];
       const grouped = {};
       filtered.forEach(ev => {
         const d = ev.day || 'General';
@@ -694,8 +589,10 @@
         grouped[d].push(ev);
       });
 
-      // Render cards
-      Object.keys(grouped).forEach(day => {
+      // Render day sections
+      daysOrder.forEach(day => {
+        if (!grouped[day] || grouped[day].length === 0) return;
+
         const dayHeader = document.createElement('div');
         dayHeader.className = 'day-header';
         dayHeader.innerHTML = `<span>📅 ${day}</span>`;
@@ -707,9 +604,10 @@
 
           const badgesHtml = (ev.badges || []).map(b => {
             let cls = '';
-            if (b.includes('Food') || b.includes('Refreshments')) cls = 'badge-food';
-            else if (b.includes('Merit')) cls = 'badge-merit';
-            else if (b.includes('Cert')) cls = 'badge-cert';
+            const bl = b.toLowerCase();
+            if (bl.includes('food') || bl.includes('makan') || bl.includes('refreshment')) cls = 'badge-food';
+            else if (bl.includes('merit') || bl.includes('star')) cls = 'badge-merit';
+            else if (bl.includes('cert') || bl.includes('sijil')) cls = 'badge-cert';
             return `<span class="badge ${cls}">${b}</span>`;
           }).join('');
 
@@ -726,7 +624,6 @@
             <div class="time-venue-row">
               <span class="info-item">⏰ ${ev.time}</span>
               <span class="info-item">📍 ${ev.venue}</span>
-              <span class="info-item">🎯 ${ev.target || 'Open to All'}</span>
             </div>
 
             <p class="quest-desc">${ev.description}</p>
@@ -749,7 +646,7 @@
       });
     }
 
-    // Event Listeners for Filters
+    // Filter Listeners
     document.getElementById('dayPills').addEventListener('click', (e) => {
       if (e.target.classList.contains('pill')) {
         document.querySelectorAll('#dayPills .pill').forEach(p => p.classList.remove('active'));
@@ -773,21 +670,39 @@
       render();
     });
 
-    // Modal Helpers
-    function openSubmitModal() {
-      document.getElementById('submitModal').style.display = 'flex';
+    // Modals
+    function openSubmitModal() { document.getElementById('submitModal').style.display = 'flex'; }
+    function closeSubmitModal() { document.getElementById('submitModal').style.display = 'none'; }
+    function openSheetModal() {
+      document.getElementById('sheetUrlInput').value = localStorage.getItem('sidequestki_sheet_url') || '';
+      document.getElementById('sheetModal').style.display = 'flex';
     }
-    function closeSubmitModal() {
-      document.getElementById('submitModal').style.display = 'none';
-    }
-    window.onclick = function(event) {
-      const modal = document.getElementById('submitModal');
-      if (event.target === modal) {
-        modal.style.display = 'none';
+    function closeSheetModal() { document.getElementById('sheetModal').style.display = 'none'; }
+
+    function saveSheetUrl() {
+      const val = document.getElementById('sheetUrlInput').value.trim();
+      if (val) {
+        localStorage.setItem('sidequestki_sheet_url', val);
+        alert('Google Sheet connected! Refreshing data now...');
+      } else {
+        localStorage.removeItem('sidequestki_sheet_url');
       }
+      closeSheetModal();
+      init();
+    }
+
+    function resetToDemo() {
+      localStorage.removeItem('sidequestki_sheet_url');
+      closeSheetModal();
+      alert('Reset to local demo data.');
+      init();
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('submitModal')) closeSubmitModal();
+      if (event.target === document.getElementById('sheetModal')) closeSheetModal();
     };
 
-    // Fallback Mock Data in case JSON isn't fetched
     function getFallbackEvents() {
       return [
         {
@@ -805,7 +720,6 @@
       ];
     }
 
-    // Launch
     init();
   </script>
 </body>

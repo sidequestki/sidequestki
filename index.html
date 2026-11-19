@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidequestki | Weekly Campus Quest Board</title>
+  <meta name="description" content="Discover campus workshops, club events, sports tournaments, and free food this week. 1-tap registration and calendar sync.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: #111827;
+      --card-border: #1F2937;
+      --card-hover: #1A2234;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-faint: #6B7280;
+      --accent: #3B82F6;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --accent-hover: #2563EB;
+      --badge-gold: #F59E0B;
+      --badge-gold-bg: rgba(245, 158, 11, 0.12);
+      --badge-green: #10B981;
+      --badge-green-bg: rgba(16, 185, 129, 0.12);
+      --badge-purple: #8B5CF6;
+      --badge-purple-bg: rgba(139, 92, 246, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top Announcement Bar */
+    .cutoff-banner {
+      background: linear-gradient(90deg, #1E1B4B 0%, #311042 100%);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #DDD6FE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .cutoff-banner strong {
+      color: #FCD34D;
+    }
+
+    /* Header */
+    header {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: var(--accent);
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover {
+      background: #1E40AF;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    /* Controls: Search & Filters */
+    .controls-section {
+      padding: 20px 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px 12px 42px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      font-size: 0.95rem;
+    }
+
+    /* Filter pills */
+    .pill-group {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .pill-group::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .pill:hover {
+      background: var(--card-hover);
+      color: var(--text-main);
+      border-color: #374151;
+    }
+
+    .pill.active {
+      background: var(--accent);
+      color: #FFFFFF;
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    /* Quests List */
+    .quests-section {
+      flex: 1;
+      padding: 10px 0 40px;
+    }
+
+    .day-header {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #93C5FD;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 22px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .day-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    .quests-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Quest Card */
+    .quest-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .quest-card:hover {
+      border-color: #374151;
+      background: var(--card-hover);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .organizer-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #60A5FA;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .quest-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+
+    .time-venue-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .quest-desc {
+      font-size: 0.85rem;
+      color: #CBD5E1;
+      line-height: 1.45;
+    }
+
+    /* Badges Row */
+    .badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .badge-food {
+      background: rgba(245, 158, 11, 0.12);
+      color: #FCD34D;
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+
+    .badge-merit {
+      background: rgba(16, 185, 129, 0.12);
+      color: #6EE7B7;
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    .badge-cert {
+      background: rgba(139, 92, 246, 0.12);
+      color: #C4B5FD;
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+
+    /* Card Actions */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-register {
+      flex: 1;
+      background: var(--accent);
+      color: #FFFFFF;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-register:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-cal {
+      background: #1F2937;
+      color: var(--text-main);
+      border: 1px solid #374151;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-cal:hover {
+      background: #374151;
+      border-color: #4B5563;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--text-faint);
+    }
+    .empty-state h3 {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: #111827;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-faint);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .modal-rules {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .modal-rules li {
+      margin-left: 16px;
+      color: #CBD5E1;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 30px 0;
+      background: #080B12;
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-disclaimer {
+      max-width: 650px;
+      margin: 8px auto 0;
+      line-height: 1.45;
+      color: #6B7280;
+    }
+
+    @media (max-width: 600px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn-submit {
+        width: 100%;
+        justify-content: center;
+      }
+      .card-actions {
+        flex-direction: column;
+      }
+      .btn-cal {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hard Cutoff Announcement -->
+  <div class="cutoff-banner">
+    <span>⏰</span>
+    <span><strong>Friday Cutoff:</strong> Submissions for next week close every <strong>Friday at 11:59 PM</strong>. Monday blast drops at 8:00 AM.</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="brand-group">
+        <div class="brand-title">
+          <span>⚔️</span>
+          <span>SIDEQUESTKI</span>
+          <span class="brand-badge">WEEK 5 DROP</span>
+        </div>
+        <p class="brand-subtitle">Your weekly campus quest board. Discover workshops, sports & free makan.</p>
+      </div>
+      <button class="btn-submit" onclick="openSubmitModal()">
+        <span>✍️</span> Submit a Sidequest
+      </button>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <div class="container controls-section">
+    <!-- Search Bar -->
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search by event, club, topic, or venue...">
+    </div>
+
+    <!-- Day Filter Pills -->
+    <div class="pill-group" id="dayPills">
+      <button class="pill active" data-filter="all">All Quests</button>
+      <button class="pill" data-filter="today">Today</button>
+      <button class="pill" data-filter="Wednesday">Wed</button>
+      <button class="pill" data-filter="Thursday">Thu</button>
+      <button class="pill" data-filter="Friday">Fri</button>
+      <button class="pill" data-filter="Saturday">Sat</button>
+      <button class="pill" data-filter="Sunday">Sun</button>
+    </div>
+
+    <!-- Loot Filter Pills -->
+    <div class="pill-group" id="lootPills">
+      <button class="pill active" data-loot="all">All Perks</button>
+      <button class="pill" data-loot="🍔 Free Refreshments">🍔 Free Makan</button>
+      <button class="pill" data-loot="🎖️ Activity Merit">🎖️ Merits</button>
+      <button class="pill" data-loot="📜 E-Certificate">📜 E-Cert</button>
+      <button class="pill" data-loot="🎟️ Free Entry">🎟️ Free Entry</button>
+    </div>
+  </div>
+
+  <!-- Quests Container -->
+  <main class="container quests-section">
+    <div id="questsContainer" class="quests-grid">
+      <!-- Dynamically populated -->
+    </div>
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <h3>No sidequests found</h3>
+      <p>Try searching for a different keyword or resetting your filters.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p><strong>SIDEQUESTKI</strong> &bull; Independent Campus Event Curation &bull; Powered by Google Sheets</p>
+      <p class="footer-disclaimer">
+        Disclaimer: Sidequestki is an independent student event directory. We are not responsible for event cancellations, venue updates, or ticketing operations managed by external organizers. For specific inquiries, please contact the listed club PIC directly.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Submission Modal -->
+  <div class="modal-overlay" id="submitModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeSubmitModal()">&times;</button>
+      <h3 class="modal-title">List Your Sidequest ⚔️</h3>
+      <p class="modal-desc">Are you organizing a workshop, competition, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast.</p>
+      <ul class="modal-rules">
+        <li><strong>Cutoff:</strong> Every Friday at 11:59 PM sharp for next week's drop.</li>
+        <li><strong>Links:</strong> Ensure your Google Form/registration URL is public.</li>
+        <li><strong>Cost:</strong> 100% Free standard listing for student organizations.</li>
+      </ul>
+      <a href="https://forms.google.com" target="_blank" class="btn-register" style="width: 100%;">
+        Open Organizer Submission Form &rarr;
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let allEvents = [];
+    let activeDay = 'all';
+    let activeLoot = 'all';
+    let searchQuery = '';
+
+    // Load Events Data
+    async function init() {
+      try {
+        const response = await fetch('data/events.json');
+        if (response.ok) {
+          allEvents = await response.json();
+        } else {
+          allEvents = getFallbackEvents();
+        }
+      } catch (e) {
+        allEvents = getFallbackEvents();
+      }
+      render();
+    }
+
+    // Google Calendar Link Builder
+    function makeGoogleCalUrl(event) {
+      const title = encodeURIComponent(event.title + " (Sidequestki)");
+      const details = encodeURIComponent(
+        `${event.description}\n\nOrganizer: ${event.organizer}\nRegistration: ${event.registration_url}\nCurated by Sidequestki.`
+      );
+      const location = encodeURIComponent(event.venue);
+
+      // Simple single-day all-day or rough ISO format
+      // Format: YYYYMMDDTHHMMSS
+      const cleanDate = (event.date || '20261125').replace(/-/g, '');
+      const dates = `${cleanDate}T060000Z/${cleanDate}T090000Z`;
+
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+    }
+
+    // Render Quest Cards
+    function render() {
+      const container = document.getElementById('questsContainer');
+      const emptyState = document.getElementById('emptyState');
+      container.innerHTML = '';
+
+      const filtered = allEvents.filter(ev => {
+        // Day filter
+        if (activeDay !== 'all') {
+          if (activeDay === 'today') {
+            // Check day name or today match
+            const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+            if (ev.day !== todayName) return false;
+          } else if (ev.day !== activeDay) {
+            return false;
+          }
+        }
+
+        // Loot filter
+        if (activeLoot !== 'all') {
+          if (!ev.badges || !ev.badges.some(b => b.includes(activeLoot.replace(/^[^\w]+/, '').trim()))) {
+            return false;
+          }
+        }
+
+        // Search query
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const matchTitle = ev.title.toLowerCase().includes(q);
+          const matchOrg = ev.organizer.toLowerCase().includes(q);
+          const matchVenue = ev.venue.toLowerCase().includes(q);
+          const matchDesc = ev.description.toLowerCase().includes(q);
+          if (!matchTitle && !matchOrg && !matchVenue && !matchDesc) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      // Group by Day
+      const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const grouped = {};
+      filtered.forEach(ev => {
+        const d = ev.day || 'General';
+        if (!grouped[d]) grouped[d] = [];
+        grouped[d].push(ev);
+      });
+
+      // Render cards
+      Object.keys(grouped).forEach(day => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+        dayHeader.innerHTML = `<span>📅 ${day}</span>`;
+        container.appendChild(dayHeader);
+
+        grouped[day].forEach(ev => {
+          const card = document.createElement('div');
+          card.className = 'quest-card';
+
+          const badgesHtml = (ev.badges || []).map(b => {
+            let cls = '';
+            if (b.includes('Food') || b.includes('Refreshments')) cls = 'badge-food';
+            else if (b.includes('Merit')) cls = 'badge-merit';
+            else if (b.includes('Cert')) cls = 'badge-cert';
+            return `<span class="badge ${cls}">${b}</span>`;
+          }).join('');
+
+          const calUrl = makeGoogleCalUrl(ev);
+
+          card.innerHTML = `
+            <div class="card-top">
+              <div>
+                <span class="organizer-label">${ev.organizer}</span>
+                <h3 class="quest-title">${ev.title}</h3>
+              </div>
+            </div>
+
+            <div class="time-venue-row">
+              <span class="info-item">⏰ ${ev.time}</span>
+              <span class="info-item">📍 ${ev.venue}</span>
+              <span class="info-item">🎯 ${ev.target || 'Open to All'}</span>
+            </div>
+
+            <p class="quest-desc">${ev.description}</p>
+
+            <div class="badges-row">
+              ${badgesHtml}
+            </div>
+
+            <div class="card-actions">
+              <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register">
+                Accept Quest (Register) &rarr;
+              </a>
+              <a href="${calUrl}" target="_blank" rel="noopener" class="btn-cal" title="Add to Google Calendar">
+                📅 + Add to Calendar
+              </a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      });
+    }
+
+    // Event Listeners for Filters
+    document.getElementById('dayPills').addEventListener('click', (e) => {
+      if (e.target.classList.contains('pill')) {
+        document.querySelectorAll('#dayPills .pill').forEach(p => p.classList.remove('active'));
+        e.target.classList.add('active');
+        activeDay = e.target.getAttribute('data-filter');
+        render();
+      }
+    });
+
+    document.getElementById('lootPills').addEventListener('click', (e) => {
+      if (e.target.classList.contains('pill')) {
+        document.querySelectorAll('#lootPills .pill').forEach(p => p.classList.remove('active'));
+        e.target.classList.add('active');
+        activeLoot = e.target.getAttribute('data-loot');
+        render();
+      }
+    });
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      render();
+    });
+
+    // Modal Helpers
+    function openSubmitModal() {
+      document.getElementById('submitModal').style.display = 'flex';
+    }
+    function closeSubmitModal() {
+      document.getElementById('submitModal').style.display = 'none';
+    }
+    window.onclick = function(event) {
+      const modal = document.getElementById('submitModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    // Fallback Mock Data in case JSON isn't fetched
+    function getFallbackEvents() {
+      return [
+        {
+          id: "sq-1",
+          title: "Figma to Code: UI/UX Masterclass",
+          organizer: "Google Developer Student Club (GDSC)",
+          day: "Wednesday",
+          date: "2026-11-25",
+          time: "2:30 PM – 5:30 PM",
+          venue: "Faculty Lab 2",
+          description: "Learn rapid UI prototyping in Figma and convert wireframes into working code.",
+          badges: ["📜 E-Certificate", "🍔 Free Refreshments", "🎖️ Activity Merit"],
+          registration_url: "https://forms.google.com"
+        }
+      ];
+    }
+
+    // Launch
+    init();
+  </script>
+</body>
+</html>

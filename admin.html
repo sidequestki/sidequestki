@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidequestki Admin Console 🛡️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: #111827;
+      --card-border: #1F2937;
+      --card-hover: #1A2234;
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-faint: #6B7280;
+      --accent: #3B82F6;
+      --accent-hover: #2563EB;
+      --danger: #EF4444;
+      --success: #10B981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg); color: var(--text-main); min-height: 100vh; padding: 24px 16px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 24px; }
+    .brand { font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; margin-left: 16px; }
+    .nav-links a:hover { color: var(--text-main); }
+
+    .grid-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; }
+    @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
+
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; }
+    .panel-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Form */
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .form-control { width: 100%; background: #0B0F19; border: 1px solid var(--card-border); border-radius: 8px; padding: 8px 12px; color: white; font-size: 0.85rem; outline: none; }
+    .form-control:focus { border-color: var(--accent); }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .checkbox-label { font-size: 0.78rem; background: #0B0F19; border: 1px solid var(--card-border); padding: 4px 10px; border-radius: 6px; cursor: pointer; user-select: none; }
+    .checkbox-label input { margin-right: 4px; }
+
+    .btn { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: background 0.15s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-block { width: 100%; margin-top: 8px; }
+    .btn-secondary { background: #1F2937; color: var(--text-main); border: 1px solid #374151; }
+    .btn-secondary:hover { background: #374151; }
+
+    /* Items List */
+    .event-item { background: #0B0F19; border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .item-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; }
+    .item-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .item-badges { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+    .tag { font-size: 0.65rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #CBD5E1; }
+    .actions { display: flex; gap: 6px; }
+    .btn-sm { padding: 4px 8px; font-size: 0.72rem; border-radius: 6px; cursor: pointer; border: none; }
+    .btn-del { background: rgba(239, 68, 68, 0.15); color: #F87171; }
+    .btn-del:hover { background: rgba(239, 68, 68, 0.3); }
+
+    .blast-box { background: #070A10; border: 1px dashed var(--card-border); border-radius: 8px; padding: 12px; font-size: 0.8rem; color: #A5B4FC; font-family: monospace; white-space: pre-wrap; margin-top: 14px; max-height: 200px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <span>🛡️</span>
+        <span>Sidequestki Admin Console</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" target="_blank">&larr; Open Live Quest Board</a>
+      </div>
+    </header>
+
+    <div class="grid-layout">
+      <!-- Left: Add / Edit Quest Form -->
+      <div class="panel">
+        <h2 class="panel-title">Add New Sidequest</h2>
+        <form id="questForm">
+          <div class="form-group">
+            <label>Event Title</label>
+            <input type="text" id="title" class="form-control" placeholder="e.g. Intro to UI/UX Design" required>
+          </div>
+          <div class="form-group">
+            <label>Organizing Body</label>
+            <input type="text" id="organizer" class="form-control" placeholder="e.g. GDSC / Tech Society" required>
+          </div>
+          <div class="row-2">
+            <div class="form-group">
+              <label>Day of Week</label>
+              <select id="day" class="form-control">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Event Date</label>
+              <input type="date" id="date" class="form-control" value="2026-11-25">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="form-group">
+              <label>Time Slot</label>
+              <input type="text" id="time" class="form-control" placeholder="e.g. 2:00 PM – 5:00 PM" required>
+            </div>
+            <div class="form-group">
+              <label>Format</label>
+              <select id="mode" class="form-control">
+                <option value="Physical">Physical</option>
+                <option value="Online">Online</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Venue / Link</label>
+            <input type="text" id="venue" class="form-control" placeholder="e.g. Faculty Lab 2 or Google Meet" required>
+          </div>
+          <div class="form-group">
+            <label>One-Sentence Description</label>
+            <input type="text" id="description" class="form-control" placeholder="Quick pitch why students should attend" required>
+          </div>
+          <div class="form-group">
+            <label>Registration Link</label>
+            <input type="url" id="regUrl" class="form-control" placeholder="https://forms.google.com/..." required>
+          </div>
+          <div class="form-group">
+            <label>Loot / Perks</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="perks" value="🍔 Free Refreshments"> 🍔 Free Food</label>
+              <label class="checkbox-label"><input type="checkbox" name="perks" value="🎖️ Activity Merit"> 🎖️ Merits</label>
+              <label class="checkbox-label"><input type="checkbox" name="perks" value="📜 E-Certificate"> 📜 E-Cert</label>
+              <label class="checkbox-label"><input type="checkbox" name="perks" value="🎟️ Free Entry"> 🎟️ Free Entry</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-block">➕ Add Sidequest</button>
+        </form>
+      </div>
+
+      <!-- Right: Active Quests & Monday Blast Generator -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>Active Quests (<span id="eventCount">0</span>)</span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-secondary" onclick="exportJSON()" style="padding: 4px 10px; font-size: 0.75rem;">💾 Download JSON</button>
+          </div>
+        </div>
+        
+        <div id="eventsList" style="max-height: 480px; overflow-y: auto;">
+          <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Monday Blast Generator -->
+        <h3 style="font-size: 0.95rem; margin-top: 20px;">🚀 Ready-to-Copy Monday Blast Text</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">Copy-paste this directly into WhatsApp/Telegram channels on Monday at 8:00 AM:</p>
+        <div id="blastText" class="blast-box"></div>
+        <button class="btn btn-secondary" onclick="copyBlast()" style="width: 100%; margin-top: 6px; font-size: 0.78rem;">📋 Copy Monday Blast to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let events = [];
+
+    async function loadData() {
+      try {
+        const res = await fetch('data/events.json');
+        events = await res.json();
+      } catch (e) {
+        events = [];
+      }
+      renderList();
+      generateBlastText();
+    }
+
+    function renderList() {
+      const container = document.getElementById('eventsList');
+      const count = document.getElementById('eventCount');
+      container.innerHTML = '';
+      count.textContent = events.length;
+
+      events.forEach((ev, idx) => {
+        const item = document.createElement('div');
+        item.className = 'event-item';
+        const badges = (ev.badges || []).map(b => `<span class="tag">${b}</span>`).join('');
+        item.innerHTML = `
+          <div>
+            <div class="item-title">${ev.title}</div>
+            <div class="item-meta">by ${ev.organizer} &bull; 📅 ${ev.day} (${ev.time}) &bull; 📍 ${ev.venue}</div>
+            <div class="item-badges">${badges}</div>
+          </div>
+          <div class="actions">
+            <button class="btn-sm btn-del" onclick="deleteEvent(${idx})">Delete</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+      generateBlastText();
+    }
+
+    document.getElementById('questForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const perks = Array.from(document.querySelectorAll('input[name="perks"]:checked')).map(c => c.value);
+      const newEv = {
+        id: 'sq-' + Date.now().toString().slice(-4),
+        title: document.getElementById('title').value.trim(),
+        organizer: document.getElementById('organizer').value.trim(),
+        day: document.getElementById('day').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value.trim(),
+        venue: document.getElementById('venue').value.trim(),
+        mode: document.getElementById('mode').value,
+        description: document.getElementById('description').value.trim(),
+        registration_url: document.getElementById('regUrl').value.trim(),
+        badges: perks,
+        status: 'APPROVED'
+      };
+      events.push(newEv);
+      renderList();
+      document.getElementById('questForm').reset();
+      alert('Sidequest added! Click "Download JSON" to save changes to data/events.json.');
+    });
+
+    function deleteEvent(idx) {
+      if (confirm('Delete this event?')) {
+        events.splice(idx, 1);
+        renderList();
+      }
+    }
+
+    function exportJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(events, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "events.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function generateBlastText() {
+      let text = `🚀 *[WEEK 5 DROP] SIDEQUESTKI IS LIVE!* ⚔️\n\n`;
+      text += `Your curated campus timetable for this week. Don't let good workshops and free makan slip by:\n\n`;
+      events.forEach((ev, i) => {
+        text += `📌 *${ev.title}*\n`;
+        text += `   🏛️ Organised by: ${ev.organizer}\n`;
+        text += `   📅 ${ev.day} | ⏰ ${ev.time}\n`;
+        text += `   📍 ${ev.venue}\n`;
+        text += `   🔗 Register: ${ev.registration_url}\n\n`;
+      });
+      text += `🗺️ *View Full Interactive Timetable & 1-Tap Calendar Sync:* \nhttps://sidequestki.github.io\n\n`;
+      text += `_⏰ Submissions for next week close Friday 11:59 PM._`;
+      document.getElementById('blastText').textContent = text;
+    }
+
+    function copyBlast() {
+      const text = document.getElementById('blastText').textContent;
+      navigator.clipboard.writeText(text);
+      alert('Copied Monday Blast text to clipboard!');
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

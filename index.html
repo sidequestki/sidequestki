@@ -25,21 +25,17 @@
       --kaiju-gold: #F3AA20;
       --seafoam-jade: #1E6D67;
       --fin-mint: #7CC5B3;
-      --cream-foam: #FFF8ED;
+      --cream-foam: #FFFDF9;
       --muted-sand: #D4C9B4;
-      --danger-red: #C23616;
-      --shadow-hard: 3px 3px 0px var(--ink-black);
-      --shadow-hover: 5px 5px 0px var(--ink-black);
-      --border-thick: 2px solid var(--ink-black);
+      --card-border: 1.5px solid var(--ink-black);
+      --shadow-card: 2px 2px 0px var(--ink-black);
       --radius-card: 8px;
       --radius-pill: 999px;
       --font-display: 'Anton', sans-serif;
       --font-body: 'Space Grotesk', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* RESET & BASE */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html {
       scroll-behavior: smooth;
@@ -52,12 +48,11 @@
       background: var(--bg-washi);
       color: var(--ink-black);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.45;
       position: relative;
       overflow-x: hidden;
       width: 100%;
     }
-    /* Washi paper grain overlay */
     body::before {
       content: '';
       position: fixed;
@@ -70,24 +65,23 @@
 
     .container {
       width: 100%;
-      max-width: 960px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 0 14px;
+      padding: 0 12px;
     }
     a { color: var(--sunset-vermilion); text-decoration: none; }
-    img { max-width: 100%; display: block; }
 
     /* ===================================================================
-       NAVBAR — Mobile Ergonomic & Woodblock header strip
+       NAVBAR — Slim & Clean
        =================================================================== */
     .navbar {
       background: var(--abyssal-teal);
-      border-bottom: 2.5px solid var(--ink-black);
-      padding: 0 12px;
+      border-bottom: 2px solid var(--ink-black);
+      padding: 0 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 52px;
+      height: 48px;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -96,102 +90,93 @@
     .navbar-brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       text-decoration: none;
-      flex-shrink: 0;
     }
-    .navbar-brand svg { flex-shrink: 0; width: 26px; height: 26px; }
+    .navbar-brand svg { width: 22px; height: 22px; flex-shrink: 0; }
     .nav-title {
       font-family: var(--font-display);
       color: var(--kaiju-gold);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       line-height: 1;
     }
     .nav-title span { color: var(--sunset-vermilion); }
 
-    .nav-actions {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      flex-shrink: 0;
-    }
+    .nav-actions { display: flex; gap: 6px; align-items: center; }
     .nav-btn {
       background: var(--sunset-vermilion);
       color: #fff;
-      border: 2px solid var(--ink-black);
+      border: 1.5px solid var(--ink-black);
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.7rem;
-      padding: 6px 11px;
+      font-size: 0.68rem;
+      padding: 5px 10px;
       border-radius: var(--radius-pill);
       cursor: pointer;
-      box-shadow: 2px 2px 0px var(--ink-black);
-      transition: all 0.15s ease;
+      box-shadow: 1.5px 1.5px 0px var(--ink-black);
+      transition: all 0.12s ease;
       white-space: nowrap;
-      min-height: 34px;
+      min-height: 30px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .nav-btn:active { transform: translate(1.5px, 1.5px); box-shadow: none; }
+    .nav-btn:active { transform: translate(1px, 1px); box-shadow: none; }
     .nav-btn--outline {
       background: rgba(124,197,179,0.15);
       color: var(--fin-mint);
       border-color: var(--fin-mint);
-      box-shadow: 1.5px 1.5px 0px rgba(0,0,0,0.4);
+      box-shadow: 1.5px 1.5px 0px rgba(0,0,0,0.3);
     }
 
     /* ===================================================================
-       HERO — Ukiyo-e Poster Illustration (Mobile Tightened)
+       HERO — Compact Ukiyo-e Header
        =================================================================== */
     .hero {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, var(--abyssal-teal) 0%, #0a2029 55%, var(--seafoam-jade) 100%);
-      padding: 28px 14px 48px;
+      background: linear-gradient(180deg, var(--abyssal-teal) 0%, #0a2029 60%, var(--seafoam-jade) 100%);
+      padding: 22px 14px 30px;
       text-align: center;
-      border-bottom: 2.5px solid var(--ink-black);
+      border-bottom: 2px solid var(--ink-black);
       width: 100%;
     }
     .hero-sunburst {
       position: absolute;
-      top: -30%;
+      top: -40%;
       left: 50%;
       transform: translateX(-50%);
-      width: 100%;
-      max-width: 600px;
-      opacity: 0.18;
+      width: 90%;
+      max-width: 500px;
+      opacity: 0.14;
       pointer-events: none;
-      transform-origin: center center;
     }
-
-    .hero-content { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+    .hero-content { position: relative; z-index: 2; max-width: 580px; margin: 0 auto; }
     .hero-eyebrow {
       font-family: var(--font-mono);
       color: var(--kaiju-gold);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
+      gap: 5px;
     }
     .hero-eyebrow .dot { width: 5px; height: 5px; background: var(--kaiju-gold); border-radius: 50%; }
 
     .hero h1 {
       font-family: var(--font-display);
       color: var(--cream-foam);
-      font-size: clamp(1.9rem, 7vw, 3.8rem);
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
       line-height: 0.98;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
     }
     .hero h1 .vermilion { color: var(--sunset-vermilion); }
@@ -200,50 +185,44 @@
     .hero-sub {
       font-family: var(--font-body);
       color: var(--fin-mint);
-      font-size: 0.84rem;
-      max-width: 440px;
-      margin: 8px auto 18px;
-      line-height: 1.45;
-      padding: 0 4px;
+      font-size: 0.8rem;
+      max-width: 420px;
+      margin: 4px auto 14px;
+      line-height: 1.4;
     }
 
     .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      width: 100%;
+      gap: 7px;
     }
     .btn-hero {
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.78rem;
-      padding: 10px 18px;
-      border: var(--border-thick);
+      font-size: 0.74rem;
+      padding: 8px 16px;
+      border: 1.5px solid var(--ink-black);
       border-radius: var(--radius-pill);
       cursor: pointer;
-      box-shadow: var(--shadow-hard);
-      transition: all 0.15s ease;
+      box-shadow: 2px 2px 0px var(--ink-black);
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
+      gap: 5px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      min-height: 42px;
-      text-decoration: none;
+      min-height: 36px;
     }
-    .btn-hero:active { transform: translate(2px, 2px); box-shadow: none; }
+    .btn-hero:active { transform: translate(1px, 1px); box-shadow: none; }
     .btn-hero--primary { background: var(--sunset-vermilion); color: #fff; }
     .btn-hero--secondary { background: var(--cream-foam); color: var(--ink-black); }
 
-    /* Wave divider */
     .wave-divider {
       position: absolute;
       bottom: -1px;
       left: 0;
       width: 100%;
-      height: 24px;
+      height: 14px;
       z-index: 3;
     }
 
@@ -252,75 +231,65 @@
        =================================================================== */
     .sync-bar {
       background: var(--ink-black);
-      padding: 6px 14px;
+      padding: 5px 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--fin-mint);
       letter-spacing: 0.8px;
-      width: 100%;
     }
     .sync-dot {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: #10B981;
-      box-shadow: 0 0 6px rgba(16,185,129,0.7);
+      box-shadow: 0 0 5px rgba(16,185,129,0.7);
     }
 
     /* ===================================================================
-       FILTER SECTION — Mobile Friendly (Non-blocking & Horizontal Smooth)
+       FILTER BAR — Streamlined Single-Zone (Eliminates Packed Headers)
        =================================================================== */
     .filter-section {
       background: var(--bg-washi);
-      border-bottom: 2px solid var(--ink-black);
-      padding: 12px 14px 10px;
+      border-bottom: 1.5px solid var(--ink-black);
+      padding: 8px 12px 6px;
       width: 100%;
-      position: relative;
     }
     .filter-inner {
-      max-width: 960px;
+      max-width: 920px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .search-row { position: relative; width: 100%; }
     .search-input {
       width: 100%;
       background: var(--cream-foam);
-      border: var(--border-thick);
-      border-radius: 8px;
-      padding: 9px 14px 9px 38px;
+      border: var(--card-border);
+      border-radius: 6px;
+      padding: 7px 12px 7px 34px;
       font-family: var(--font-body);
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       color: var(--ink-black);
       outline: none;
-      box-shadow: 2px 2px 0px var(--ink-black);
+      box-shadow: 1.5px 1.5px 0px var(--ink-black);
     }
     .search-input::placeholder { color: #8C8270; }
-    .search-input:focus { box-shadow: 2.5px 2.5px 0px var(--sunset-vermilion); }
+    .search-input:focus { border-color: var(--sunset-vermilion); }
     .search-icon {
       position: absolute;
-      left: 12px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
     }
 
-    .filter-group { display: flex; flex-direction: column; gap: 3px; }
-    .filter-label {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--abyssal-teal);
-      font-weight: 700;
-    }
-    .pill-row {
+    /* Unified Horizontal Filter Swipe Row */
+    .filter-unified-row {
       display: flex;
       gap: 5px;
       overflow-x: auto;
@@ -329,14 +298,23 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-x: contain;
       padding: 2px 1px 4px;
+      align-items: center;
     }
-    .pill-row::-webkit-scrollbar { display: none; }
+    .filter-unified-row::-webkit-scrollbar { display: none; }
+
+    .filter-sep {
+      width: 1px;
+      height: 18px;
+      background: #C4BAA5;
+      margin: 0 3px;
+      flex-shrink: 0;
+    }
 
     .pill {
       font-family: var(--font-body);
       font-weight: 600;
-      font-size: 0.7rem;
-      padding: 6px 11px;
+      font-size: 0.68rem;
+      padding: 4px 10px;
       border: 1.5px solid var(--ink-black);
       border-radius: var(--radius-pill);
       background: var(--cream-foam);
@@ -344,8 +322,8 @@
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.12s ease;
-      box-shadow: 1.5px 1.5px 0px var(--ink-black);
-      min-height: 32px;
+      box-shadow: 1px 1px 0px var(--ink-black);
+      min-height: 28px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -359,116 +337,87 @@
     }
 
     /* ===================================================================
-       QUEST CARDS — Mobile Ergonomic 2-Tier Actions
+       QUEST CARDS — Sleek, High-Density & Airy (NOT PACKED)
        =================================================================== */
-    .quests-section { padding: 18px 0 40px; width: 100%; }
-    .quests-grid { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+    .quests-section { padding: 10px 0 32px; width: 100%; }
+    .quests-grid { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 
     .day-header {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--abyssal-teal);
       text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 8px 0 4px;
-      border-bottom: 2px solid var(--ink-black);
+      letter-spacing: 1.5px;
+      padding: 6px 0 2px;
+      border-bottom: 1.5px solid var(--ink-black);
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 8px;
+      gap: 6px;
+      margin-top: 6px;
     }
     .day-header:first-child { margin-top: 0; }
 
+    /* The Sleek Card: Left Accent Stripe, No Bulky SVG Banners on Mobile */
     .quest-card {
       background: var(--cream-foam);
-      border: var(--border-thick);
+      border: var(--card-border);
       border-radius: var(--radius-card);
-      box-shadow: var(--shadow-hard);
+      box-shadow: var(--shadow-card);
       overflow: hidden;
       position: relative;
       width: 100%;
+      border-left: 5px solid var(--seafoam-jade);
     }
+    .quest-card--sports { border-left-color: #0F2D37; }
+    .quest-card--tech { border-left-color: var(--seafoam-jade); }
+    .quest-card--arts { border-left-color: var(--sunset-vermilion); }
+    .quest-card--volunteer { border-left-color: #10B981; }
 
+    /* Decorative banner is hidden on mobile to keep card ultra-compact */
     .card-banner {
-      height: 52px;
+      display: none;
+      height: 48px;
       position: relative;
       overflow: hidden;
-      border-bottom: 2px solid var(--ink-black);
+      border-bottom: 1px solid var(--ink-black);
     }
     .card-banner svg { width: 100%; height: 100%; display: block; }
 
-    .card-body { padding: 12px 14px 14px; }
+    .card-body { padding: 10px 12px 10px; }
 
+    /* Top Row: Club/Kolej Tag + Perks Badges side by side */
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
     .organizer-tag {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       color: var(--seafoam-jade);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       font-weight: 700;
-      display: block;
-    }
-    .quest-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      line-height: 1.15;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink-black);
-      margin: 3px 0 8px;
-    }
-
-    /* Info row: 2-column grid for time/date, full-width venue */
-    .info-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 8px;
-      margin-bottom: 8px;
-      background: rgba(246, 239, 226, 0.6);
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(8, 24, 30, 0.1);
-    }
-    .info-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.74rem;
-      color: var(--abyssal-teal);
-      font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .info-chip svg { flex-shrink: 0; width: 13px; height: 13px; }
-    .info-chip--venue {
-      grid-column: 1 / -1;
-      white-space: normal;
-      word-break: break-word;
+    .badges-wrap {
+      display: flex;
+      gap: 3px;
+      flex-shrink: 0;
     }
-
-    .quest-desc {
-      font-size: 0.78rem;
-      color: #38454a;
-      line-height: 1.45;
-      margin-bottom: 10px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Badges */
-    .badges-row { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
     .badge {
       font-family: var(--font-mono);
-      font-size: 0.58rem;
-      font-weight: 600;
-      padding: 3px 8px;
+      font-size: 0.54rem;
+      font-weight: 700;
+      padding: 2px 6px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--ink-black);
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
     }
     .badge-food { background: #FEF3C7; color: #92400E; border-color: #D97706; }
     .badge-merit { background: #D1FAE5; color: #065F46; border-color: #059669; }
@@ -476,101 +425,117 @@
     .badge-free { background: #FCE7F3; color: #9D174D; border-color: #EC4899; }
     .badge-default { background: var(--bg-washi); color: var(--abyssal-teal); }
 
-    /* Card actions — 2-tier ergonomic layout on mobile */
-    .card-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      width: 100%;
+    .quest-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--ink-black);
+      margin: 2px 0 6px;
     }
-    .btn-register {
-      width: 100%;
+
+    /* Single-line sleek metadata */
+    .quest-meta-line {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 6px;
+      font-size: 0.72rem;
+      color: #4A5568;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+    }
+    .meta-item svg { width: 12px; height: 12px; flex-shrink: 0; color: #64748B; }
+    .meta-dot { color: #CBD5E1; font-weight: bold; }
+
+    .quest-desc {
+      font-size: 0.74rem;
+      color: #4B5563;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Compact 1-line Footer Actions */
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(8, 24, 30, 0.12);
+    }
+    .btn-register-compact {
+      flex: 1;
       background: var(--sunset-vermilion);
       color: #fff;
-      border: var(--border-thick);
+      border: 1.5px solid var(--ink-black);
       border-radius: var(--radius-pill);
-      padding: 10px 14px;
+      padding: 6px 12px;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       text-align: center;
       cursor: pointer;
-      box-shadow: 2px 2px 0px var(--ink-black);
+      box-shadow: 1.5px 1.5px 0px var(--ink-black);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      min-height: 42px;
+      gap: 4px;
+      min-height: 32px;
       text-decoration: none;
     }
-    .btn-register:active { transform: translate(1.5px, 1.5px); box-shadow: none; }
+    .btn-register-compact:active { transform: translate(1px, 1px); box-shadow: none; }
 
-    .card-actions-sub {
-      display: flex;
-      gap: 6px;
-      width: 100%;
-    }
-    .btn-cal {
-      flex: 1;
-      background: var(--cream-foam);
-      color: var(--abyssal-teal);
-      border: 1.5px solid var(--ink-black);
-      border-radius: var(--radius-pill);
-      padding: 8px 10px;
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 0.72rem;
-      cursor: pointer;
-      box-shadow: 1.5px 1.5px 0px var(--ink-black);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      min-height: 38px;
-      white-space: nowrap;
-    }
-    .btn-cal:active { transform: translate(1px, 1px); box-shadow: none; }
-
-    .btn-share-card {
-      flex: 1;
+    .btn-icon-action {
       background: var(--cream-foam);
       border: 1.5px solid var(--ink-black);
       border-radius: var(--radius-pill);
-      padding: 8px 10px;
+      padding: 5px 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 4px;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       color: var(--abyssal-teal);
-      box-shadow: 1.5px 1.5px 0px var(--ink-black);
-      min-height: 38px;
+      box-shadow: 1px 1px 0px var(--ink-black);
+      min-height: 32px;
       white-space: nowrap;
       text-transform: uppercase;
     }
-    .btn-share-card:active { transform: translate(1px, 1px); box-shadow: none; }
+    .btn-icon-action svg { width: 12px; height: 12px; }
+    .btn-icon-action:active { transform: translate(1px, 1px); box-shadow: none; }
 
     /* ===================================================================
        EMPTY STATE
        =================================================================== */
     .empty-state {
       text-align: center;
-      padding: 40px 16px;
+      padding: 30px 14px;
       display: none;
     }
     .empty-state h3 {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       color: var(--abyssal-teal);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
-    .empty-state p { color: #8C8270; font-size: 0.82rem; }
+    .empty-state p { color: #8C8270; font-size: 0.78rem; }
 
     /* ===================================================================
        MODALS
@@ -584,15 +549,15 @@
       align-items: center;
       justify-content: center;
       padding: 12px;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(2px);
     }
     .modal-box {
       background: var(--cream-foam);
-      border: var(--border-thick);
-      border-radius: 10px;
-      box-shadow: 4px 4px 0px var(--ink-black);
-      padding: 20px 16px;
-      max-width: 420px;
+      border: var(--card-border);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0px var(--ink-black);
+      padding: 18px 14px;
+      max-width: 400px;
       width: 100%;
       position: relative;
       max-height: 90vh;
@@ -600,78 +565,78 @@
     }
     .modal-close {
       position: absolute;
-      top: 10px; right: 10px;
+      top: 8px; right: 8px;
       background: none;
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       cursor: pointer;
       color: var(--ink-black);
       line-height: 1;
-      min-width: 38px; min-height: 38px;
+      min-width: 34px; min-height: 34px;
       display: flex; align-items: center; justify-content: center;
     }
     .modal-title {
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 6px;
-      padding-right: 32px;
+      margin-bottom: 4px;
+      padding-right: 28px;
     }
-    .modal-desc { font-size: 0.8rem; color: #3a4a50; line-height: 1.45; margin-bottom: 14px; }
+    .modal-desc { font-size: 0.78rem; color: #3a4a50; line-height: 1.4; margin-bottom: 12px; }
     .modal-info-box {
       background: var(--bg-washi);
-      border: 1.5px solid var(--muted-sand);
+      border: 1px solid var(--muted-sand);
       border-radius: 6px;
-      padding: 10px 12px;
-      margin-bottom: 14px;
-      font-size: 0.74rem;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      font-size: 0.72rem;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
       color: var(--abyssal-teal);
     }
     .cal-option {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 11px 12px;
-      border: var(--border-thick);
+      gap: 8px;
+      padding: 9px 10px;
+      border: var(--card-border);
       border-radius: 6px;
       background: var(--cream-foam);
-      box-shadow: 2px 2px 0px var(--ink-black);
+      box-shadow: 1.5px 1.5px 0px var(--ink-black);
       cursor: pointer;
       text-decoration: none;
       color: var(--ink-black);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-family: var(--font-body);
-      min-height: 48px;
+      min-height: 42px;
     }
     .cal-option:active { transform: translate(1px, 1px); box-shadow: none; }
-    .cal-option-label { font-weight: 700; font-size: 0.82rem; }
-    .cal-option-sub { font-size: 0.68rem; color: #64748B; }
+    .cal-option-label { font-weight: 700; font-size: 0.78rem; }
+    .cal-option-sub { font-size: 0.65rem; color: #64748B; }
 
     /* ===================================================================
        TOAST
        =================================================================== */
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%) translateY(120px);
       background: var(--ink-black);
       color: var(--kaiju-gold);
-      border: 2px solid var(--kaiju-gold);
+      border: 1.5px solid var(--kaiju-gold);
       border-radius: 6px;
-      padding: 10px 16px;
+      padding: 8px 14px;
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.5px;
       z-index: 3000;
-      box-shadow: 3px 3px 0px var(--kaiju-gold);
+      box-shadow: 2.5px 2.5px 0px var(--kaiju-gold);
       pointer-events: none;
-      transition: transform 0.35s var(--ease-bounce), opacity 0.35s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease;
       opacity: 0;
       text-align: center;
       max-width: calc(100vw - 32px);
@@ -684,105 +649,78 @@
        =================================================================== */
     footer {
       background: var(--abyssal-teal);
-      border-top: 2.5px solid var(--ink-black);
-      padding: 24px 14px 20px;
+      border-top: 2px solid var(--ink-black);
+      padding: 20px 14px 16px;
       text-align: center;
       color: var(--fin-mint);
       width: 100%;
     }
     .footer-brand {
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       color: var(--kaiju-gold);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .footer-url {
       font-family: var(--font-mono);
-      font-size: 0.64rem;
+      font-size: 0.62rem;
       color: var(--muted-sand);
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 4px;
     }
     .footer-stamp {
       display: inline-block;
-      border: 1.5px solid var(--sunset-vermilion);
+      border: 1px solid var(--sunset-vermilion);
       color: var(--sunset-vermilion);
-      padding: 3px 10px;
+      padding: 2px 8px;
       font-family: var(--font-display);
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       transform: rotate(-2deg);
       opacity: 0.85;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .footer-disclaimer {
-      font-size: 0.64rem;
+      font-size: 0.6rem;
       color: rgba(124,197,179,0.5);
-      max-width: 540px;
+      max-width: 500px;
       margin: 0 auto;
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     /* ===================================================================
-       DESKTOP & TABLET RESPONSIVE (768px+)
+       DESKTOP & TABLET (768px+)
        =================================================================== */
     @media (min-width: 768px) {
-      .navbar { height: 56px; padding: 0 16px; }
-      .nav-title { font-size: 1.4rem; letter-spacing: 2px; }
-      .nav-btn { font-size: 0.74rem; padding: 7px 14px; min-height: 36px; }
-      
-      .hero { padding: 54px 20px 84px; }
-      .hero-sunburst { max-width: 800px; }
-      .hero h1 { font-size: 3.5rem; }
-      .hero-sub { font-size: 0.95rem; margin: 12px auto 22px; }
-      .btn-hero { font-size: 0.85rem; padding: 12px 24px; min-height: 48px; }
-      
-      .filter-section {
-        position: sticky;
-        top: 56px;
-        z-index: 999;
-        padding: 14px 16px 12px;
-      }
-      .filter-inner { gap: 10px; }
-      .search-input { padding: 11px 16px 11px 44px; font-size: 0.88rem; }
-      .pill { font-size: 0.74rem; padding: 7px 14px; min-height: 34px; }
+      .navbar { height: 52px; padding: 0 16px; }
+      .nav-title { font-size: 1.35rem; }
+      .nav-btn { font-size: 0.72rem; padding: 6px 12px; min-height: 32px; }
+
+      .hero { padding: 42px 20px 64px; }
+      .hero-sunburst { max-width: 700px; }
+      .hero h1 { font-size: 3.2rem; }
+      .hero-sub { font-size: 0.9rem; margin: 8px auto 18px; }
+      .btn-hero { font-size: 0.82rem; padding: 10px 20px; min-height: 44px; }
+
+      .filter-section { padding: 12px 16px 10px; }
+      .filter-inner { gap: 8px; }
+      .search-input { padding: 9px 14px 9px 38px; font-size: 0.84rem; }
 
       .quests-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
+        gap: 12px;
       }
-      .day-header { grid-column: 1 / -1; font-size: 1.3rem; }
-      .card-banner { height: 72px; }
-      .card-body { padding: 14px 16px 16px; }
-      .quest-title { font-size: 1.18rem; }
-
-      .info-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px 14px;
-        background: transparent;
-        border: none;
-        padding: 0;
-      }
-      .info-chip--venue { grid-column: auto; }
-
-      .card-actions {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-      }
-      .btn-register { flex: 1; min-width: 140px; }
-      .card-actions-sub { width: auto; flex-shrink: 0; }
-      .btn-cal { flex: initial; }
-      .btn-share-card { flex: initial; }
+      .day-header { grid-column: 1 / -1; font-size: 1.2rem; }
+      .card-banner { display: block; }
+      .card-body { padding: 12px 14px 12px; }
+      .quest-title { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -803,11 +741,11 @@
     </a>
     <div class="nav-actions">
       <button class="nav-btn nav-btn--outline" onclick="copyBoardLink()" aria-label="Share Board">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         <span>SHARE</span>
       </button>
       <button class="nav-btn" onclick="openSubmitModal()" aria-label="Drop Quest">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>+ QUEST</span>
       </button>
     </div>
@@ -815,7 +753,6 @@
 
   <!-- ==================== HERO ==================== -->
   <section class="hero">
-    <!-- Sunburst SVG -->
     <svg class="hero-sunburst" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
       <circle cx="400" cy="400" r="120" fill="#F3AA20" opacity="0.45"/>
       <g opacity="0.55">
@@ -837,21 +774,15 @@
     <div class="hero-content">
       <div class="hero-eyebrow"><span class="dot"></span> CAMPUS QUEST BOARD · UKM</div>
       <h1>DISCOVER<br>YOUR NEXT<br><span class="vermilion">SIDE</span><span class="gold">QUEST</span></h1>
-      <p class="hero-sub">Workshops, sports tournaments, kolej events, and free makan this week at UKM. 1-tap register &amp; calendar sync.</p>
+      <p class="hero-sub">Workshops, sports, kolej programs, and free makan this week at UKM. 1-tap register &amp; sync.</p>
       <div class="hero-cta-row">
-        <a href="#quests" class="btn-hero btn-hero--primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          EXPLORE QUESTS
-        </a>
-        <button class="btn-hero btn-hero--secondary" onclick="openSubmitModal()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          DROP YOUR QUEST
-        </button>
+        <a href="#quests" class="btn-hero btn-hero--primary">EXPLORE QUESTS</a>
+        <button class="btn-hero btn-hero--secondary" onclick="openSubmitModal()">+ DROP QUEST</button>
       </div>
     </div>
 
-    <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z" fill="var(--bg-washi)"/>
+    <svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 C240,40 480,0 720,20 C960,40 1200,0 1440,20 L1440,40 L0,40Z" fill="var(--bg-washi)"/>
     </svg>
   </section>
 
@@ -861,50 +792,32 @@
     <span id="syncText">SYNCING QUEST BOARD...</span>
   </div>
 
-  <!-- ==================== FILTER BAR ==================== -->
+  <!-- ==================== FILTER BAR (Single-Line Swipable Streamlined) ==================== -->
   <div class="filter-section">
     <div class="filter-inner">
       <div class="search-row">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8270" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8C8270" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="searchInput" class="search-input" placeholder="Search event, club, kolej, venue...">
       </div>
 
-      <div class="filter-group">
-        <div class="filter-label">FILTER BY DAY</div>
-        <div class="pill-row" id="dayPills">
-          <button class="pill active" data-filter="all">All Days</button>
-          <button class="pill" data-filter="today">⚡ Today</button>
-          <button class="pill" data-filter="Monday">Mon</button>
-          <button class="pill" data-filter="Tuesday">Tue</button>
-          <button class="pill" data-filter="Wednesday">Wed</button>
-          <button class="pill" data-filter="Thursday">Thu</button>
-          <button class="pill" data-filter="Friday">Fri</button>
-          <button class="pill" data-filter="Saturday">Sat</button>
-          <button class="pill" data-filter="Sunday">Sun</button>
-        </div>
-      </div>
+      <!-- Single horizontal stream: Days + Perks separated by divider -->
+      <div class="filter-unified-row" id="filterRow">
+        <button class="pill active" data-type="day" data-val="all">All Days</button>
+        <button class="pill" data-type="day" data-val="today">⚡ Today</button>
+        <button class="pill" data-type="day" data-val="Monday">Mon</button>
+        <button class="pill" data-type="day" data-val="Tuesday">Tue</button>
+        <button class="pill" data-type="day" data-val="Wednesday">Wed</button>
+        <button class="pill" data-type="day" data-val="Thursday">Thu</button>
+        <button class="pill" data-type="day" data-val="Friday">Fri</button>
+        <button class="pill" data-type="day" data-val="Saturday">Sat</button>
+        <button class="pill" data-type="day" data-val="Sunday">Sun</button>
 
-      <div class="filter-group">
-        <div class="filter-label">FILTER BY PERKS &amp; LOOT</div>
-        <div class="pill-row" id="lootPills">
-          <button class="pill active" data-loot="all">All Perks</button>
-          <button class="pill" data-loot="Food">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 13h18l-1.5 7H4.5L3 13z"/><path d="M3 13c0-4 4-8 9-8s9 4 9 8"/></svg>
-            Free Makan
-          </button>
-          <button class="pill" data-loot="Merit">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            i-Star Merit
-          </button>
-          <button class="pill" data-loot="Cert">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="7" y1="10" x2="17" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/></svg>
-            E-Cert
-          </button>
-          <button class="pill" data-loot="Free Entry">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
-            Free Entry
-          </button>
-        </div>
+        <span class="filter-sep"></span>
+
+        <button class="pill" data-type="loot" data-val="Food">🍔 Free Makan</button>
+        <button class="pill" data-type="loot" data-val="Merit">⭐ i-Star</button>
+        <button class="pill" data-type="loot" data-val="Cert">📜 E-Cert</button>
+        <button class="pill" data-type="loot" data-val="Free Entry">🎟️ Free</button>
       </div>
     </div>
   </div>
@@ -913,9 +826,8 @@
   <main class="container quests-section" id="quests">
     <div class="quests-grid" id="questsContainer"></div>
     <div class="empty-state" id="emptyState">
-      <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#D4C9B4" stroke-width="1.5" stroke-linecap="round" style="margin:0 auto 12px"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"/></svg>
       <h3>NO QUESTS FOUND</h3>
-      <p>Try searching for a different keyword or resetting your filters above.</p>
+      <p>Try searching for a different keyword or resetting your filter.</p>
     </div>
   </main>
 
@@ -924,17 +836,17 @@
     <div class="container">
       <div class="footer-brand">SIDEQUESTKI</div>
       <div class="footer-url">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.07.01l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.07-.01l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.07.01l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.07-.01l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
         sidequestki.github.io/sidequestki
       </div>
       <div class="footer-stamp">CAMPUS QUEST BOARD · UKM</div>
-      <p style="font-size:0.75rem;margin-bottom:12px;color:var(--fin-mint);">
+      <p style="font-size:0.72rem;margin-bottom:8px;color:var(--fin-mint);">
         <button onclick="copyBoardLink()" style="all:unset;cursor:pointer;text-decoration:underline;color:var(--kaiju-gold);">📋 Copy Board Link</button>
         &nbsp;•&nbsp;
         <button onclick="openSubmitModal()" style="all:unset;cursor:pointer;text-decoration:underline;color:var(--kaiju-gold);">📤 Drop Your Quest</button>
       </p>
       <p class="footer-disclaimer">
-        Sidequestki is an independent student event directory for Universiti Kebangsaan Malaysia. Not officially affiliated with UKM administration.
+        Independent student event directory for Universiti Kebangsaan Malaysia.
       </p>
     </div>
   </footer>
@@ -944,19 +856,17 @@
     <div class="modal-box">
       <button class="modal-close" onclick="closeSubmitModal()" aria-label="Close">&times;</button>
       <h3 class="modal-title">⚔️ DROP YOUR QUEST</h3>
-      <p class="modal-desc">Organizing a workshop, tournament, kolej event, or talk? Submit your details to be featured in the weekly quest board.</p>
+      <p class="modal-desc">Submit your event to be featured in next week's campus quest board.</p>
       <div class="modal-info-box">
-        <div>⏰ <strong>Cutoff:</strong> Every Friday 11:59 PM for next week</div>
-        <div>🔗 <strong>Links:</strong> Ensure your registration form is public</div>
-        <div>💰 <strong>Cost:</strong> 100% Free listing for UKM student bodies</div>
-        <div>🏛️ <strong>Live URL:</strong> <span style="font-family:var(--font-mono);font-size:0.65rem;">sidequestki.github.io/sidequestki</span></div>
+        <div>⏰ <strong>Cutoff:</strong> Every Friday 11:59 PM</div>
+        <div>🔗 <strong>Links:</strong> Ensure registration form is public</div>
+        <div>💰 <strong>Cost:</strong> 100% Free listing for UKM student clubs</div>
+        <div>🏛️ <strong>Board URL:</strong> <span style="font-family:var(--font-mono);font-size:0.62rem;">sidequestki.github.io/sidequestki</span></div>
       </div>
-      <a id="submitFormLink" href="#" target="_blank" rel="noopener" class="btn-register" style="margin-bottom:8px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      <a id="submitFormLink" href="#" target="_blank" rel="noopener" class="btn-register-compact" style="margin-bottom:6px;width:100%;">
         OPEN SUBMISSION FORM →
       </a>
-      <button onclick="copyBoardLink();closeSubmitModal();" class="btn-cal" style="width:100%;justify-content:center;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      <button onclick="copyBoardLink();closeSubmitModal();" class="btn-icon-action" style="width:100%;justify-content:center;">
         COPY BOARD LINK
       </button>
     </div>
@@ -969,17 +879,17 @@
       <h3 class="modal-title">📅 ADD TO CALENDAR</h3>
       <p class="modal-desc" id="calModalEventName">Sync this quest to your personal calendar:</p>
       <a id="btnGCal" href="#" target="_blank" rel="noopener" class="cal-option">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E45226" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E45226" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <div>
           <div class="cal-option-label">Google Calendar</div>
-          <div class="cal-option-sub">Opens directly in Google Calendar with 1-hr reminder</div>
+          <div class="cal-option-sub">Direct sync with 1-hr reminder</div>
         </div>
       </a>
       <button id="btnICal" onclick="downloadICal()" class="cal-option" style="width:100%;text-align:left;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E6D67" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14l2 2 4-4"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E6D67" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14l2 2 4-4"/></svg>
         <div>
           <div class="cal-option-label">Apple / Outlook / Phone Calendar</div>
-          <div class="cal-option-sub">Downloads .ics file that opens in your phone calendar</div>
+          <div class="cal-option-sub">Downloads .ics file to open in your calendar</div>
         </div>
       </button>
     </div>
@@ -1003,42 +913,11 @@
     let selectedCalEvent = null;
 
     const CARD_BANNERS = {
-      sports: `<svg viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="60" fill="#0F2D37"/>
-        <circle cx="340" cy="-10" r="50" fill="#E45226" opacity="0.8"/>
-        <path d="M0,45 Q50,20 100,38 Q150,55 200,32 Q250,15 300,42 Q350,60 400,30 L400,60 L0,60Z" fill="#1E6D67"/>
-        <path d="M0,52 Q80,38 160,50 Q240,62 320,45 Q380,35 400,42 L400,60 L0,60Z" fill="#7CC5B3" opacity="0.6"/>
-        <text x="14" y="22" fill="#F3AA20" font-family="Anton,sans-serif" font-size="12" letter-spacing="2.5" opacity="0.6">⚽ SPORTS &amp; RIADAH</text>
-      </svg>`,
-      tech: `<svg viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="60" fill="#0F2D37"/>
-        <line x1="0" y1="15" x2="400" y2="15" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
-        <line x1="0" y1="30" x2="400" y2="30" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
-        <line x1="0" y1="45" x2="400" y2="45" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
-        <rect x="280" y="8" width="90" height="16" rx="3" fill="#E45226" opacity="0.6"/>
-        <rect x="20" y="38" width="50" height="12" rx="3" fill="#F3AA20" opacity="0.5"/>
-        <text x="14" y="22" fill="#7CC5B3" font-family="JetBrains Mono,monospace" font-size="10" letter-spacing="1.5" opacity="0.7">&lt;/&gt; TECH &amp; CODING</text>
-      </svg>`,
-      arts: `<svg viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="60" fill="#E45226"/>
-        <circle cx="50" cy="30" r="24" fill="#F3AA20" opacity="0.6"/>
-        <circle cx="340" cy="35" r="30" fill="#F3AA20" opacity="0.4"/>
-        <path d="M0,50 Q100,30 200,48 Q300,68 400,42 L400,60 L0,60Z" fill="#0F2D37" opacity="0.5"/>
-        <text x="14" y="22" fill="#FFF8ED" font-family="Anton,sans-serif" font-size="12" letter-spacing="2.5" opacity="0.8">🎭 ARTS &amp; KEBUDAYAAN</text>
-      </svg>`,
-      volunteer: `<svg viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="60" fill="#1E6D67"/>
-        <path d="M0,32 Q40,8 80,32 Q120,55 160,32 Q200,8 240,32 Q280,55 320,32 Q360,8 400,32 L400,60 L0,60Z" fill="#0F2D37" opacity="0.4"/>
-        <circle cx="340" cy="20" r="16" fill="#F3AA20" opacity="0.6"/>
-        <text x="14" y="22" fill="#FFF8ED" font-family="Anton,sans-serif" font-size="12" letter-spacing="2.5" opacity="0.7">🤝 VOLUNTEER &amp; BIRO</text>
-      </svg>`,
-      default: `<svg viewBox="0 0 400 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="60" fill="#0F2D37"/>
-        <circle cx="350" cy="0" r="40" fill="#E45226" opacity="0.35"/>
-        <path d="M0,38 Q100,15 200,38 Q300,60 400,30 L400,60 L0,60Z" fill="#1E6D67" opacity="0.5"/>
-        <path d="M0,48 Q150,35 300,52 Q380,58 400,48 L400,60 L0,60Z" fill="#7CC5B3" opacity="0.4"/>
-        <text x="14" y="22" fill="#F3AA20" font-family="Anton,sans-serif" font-size="12" letter-spacing="2.5" opacity="0.6">🏛️ CAMPUS QUEST</text>
-      </svg>`
+      sports: `<svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="48" fill="#0F2D37"/><circle cx="340" cy="-5" r="40" fill="#E45226" opacity="0.8"/><path d="M0,35 Q100,20 200,35 Q300,50 400,25 L400,48 L0,48Z" fill="#1E6D67"/></svg>`,
+      tech: `<svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="48" fill="#0F2D37"/><line x1="0" y1="24" x2="400" y2="24" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/></svg>`,
+      arts: `<svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="48" fill="#E45226"/><circle cx="50" cy="24" r="18" fill="#F3AA20" opacity="0.6"/></svg>`,
+      volunteer: `<svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="48" fill="#1E6D67"/><circle cx="340" cy="15" r="12" fill="#F3AA20" opacity="0.6"/></svg>`,
+      default: `<svg viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="48" fill="#0F2D37"/><path d="M0,30 Q200,10 400,25 L400,48 L0,48Z" fill="#1E6D67" opacity="0.5"/></svg>`
     };
 
     function getCategoryBanner(title, org) {
@@ -1048,6 +927,15 @@
       if (/art|seni|budaya|tari|nyanyi|teater|drama|muzik|fest|culture|raya|malam|pesta|carnival/i.test(t)) return CARD_BANNERS.arts;
       if (/volunteer|sukarela|biro|urusetia|gotong|bakti|derma|community|kebajikan|charity/i.test(t)) return CARD_BANNERS.volunteer;
       return CARD_BANNERS.default;
+    }
+
+    function getCategoryClass(title, org) {
+      const t = ((title || '') + ' ' + (org || '')).toLowerCase();
+      if (/futsal|sukan|sport|rugby|badminton|bola|tournament|lari|run|gym|swim|hiking|riadah/i.test(t)) return 'quest-card--sports';
+      if (/code|coding|tech|hack|web|app|dev|figma|ai|robot|data|cyber|iot|programming/i.test(t)) return 'quest-card--tech';
+      if (/art|seni|budaya|tari|nyanyi|teater|drama|muzik|fest|culture|raya|malam|pesta|carnival/i.test(t)) return 'quest-card--arts';
+      if (/volunteer|sukarela|biro|urusetia|gotong|bakti|derma|community|kebajikan|charity/i.test(t)) return 'quest-card--volunteer';
+      return '';
     }
 
     function parseCSV(text) {
@@ -1158,12 +1046,12 @@
 
     function loadFallbackData() {
       allEvents = [
-        { id:"sq-1", title:"Figma to Code: UI/UX Masterclass", organizer:"Google Developer Student Club (GDSC)", day:"Wednesday", date:"11/25/2026", time:"2:30 PM – 5:30 PM", venue:"Faculty Lab 2, FTSM", description:"Learn rapid UI prototyping in Figma and convert wireframes into working code. Laptop required.", badges:["📜 E-Certificate","🍔 Free Refreshments","🎖️ Activity Merit"], registration_url:"https://forms.google.com" },
-        { id:"sq-2", title:"Campus 3v3 Futsal Blitz Tournament", organizer:"Student Sports Council UKM", day:"Thursday", date:"11/26/2026", time:"8:00 PM – 11:00 PM", venue:"Sports Complex Court B", description:"Quick 3v3 knockout tournament. Medals, cash prizes, and i-Star merit for participants.", badges:["🏆 Prizes","🎟️ Free Entry","🎖️ Activity Merit"], registration_url:"https://forms.google.com" },
-        { id:"sq-3", title:"Malam Apresiasi Kolej KIY 2026", organizer:"MEP Kolej Ibrahim Yaakub (KIY)", day:"Friday", date:"11/27/2026", time:"8:00 PM – 10:30 PM", venue:"Dewan Kolej KIY", description:"Malam penghargaan urusetia dan pelajar aktif. Persembahan budaya, cabutan bertuah, dan jamuan makan.", badges:["🍔 Free Food","📜 E-Certificate","🎖️ Activity Merit","🎟️ Free Entry"], registration_url:"https://forms.google.com" },
-        { id:"sq-4", title:"Gotong-Royong Perdana UKM", organizer:"Sekretariat Kesukarelawanan UKM", day:"Saturday", date:"11/28/2026", time:"7:30 AM – 12:00 PM", venue:"Padang Kawad UKM", description:"Program pembersihan kampus dan penanaman pokok. Bas disediakan dari Foyer Pusanika.", badges:["🎖️ Activity Merit","🍔 Free Refreshments","🎟️ Free Entry"], registration_url:"https://forms.google.com" },
-        { id:"sq-5", title:"Python for Data Science Workshop", organizer:"Persatuan Mahasiswa Sains Komputer", day:"Monday", date:"11/23/2026", time:"10:00 AM – 1:00 PM", venue:"Makmal Komputer 3, FTSM Aras 2", description:"Hands-on workshop using Python pandas and matplotlib for beginners. Bring your laptop.", badges:["📜 E-Certificate","🍔 Free Refreshments"], registration_url:"https://forms.google.com" },
-        { id:"sq-6", title:"Debat Piala Naib Canselor 2026", organizer:"KMUKM", day:"Tuesday", date:"11/24/2026", time:"9:00 AM – 5:00 PM", venue:"Dewan DECTAR, Pusanika Aras 5", description:"Pertandingan debat antara fakulti peringkat universiti. Terbuka kepada semua kolej kediaman.", badges:["🎖️ Activity Merit","📜 E-Certificate","🍔 Free Food"], registration_url:"https://forms.google.com" }
+        { id:"sq-1", title:"Figma to Code: UI/UX Masterclass", organizer:"Google Developer Student Club (GDSC)", day:"Wednesday", date:"11/25/2026", time:"2:30 PM – 5:30 PM", venue:"Faculty Lab 2, FTSM", description:"Learn rapid UI prototyping in Figma and convert wireframes into working code.", badges:["📜 E-Cert","🍔 Free Makan","⭐ i-Star"], registration_url:"https://forms.google.com" },
+        { id:"sq-2", title:"Campus 3v3 Futsal Blitz Tournament", organizer:"Student Sports Council UKM", day:"Thursday", date:"11/26/2026", time:"8:00 PM – 11:00 PM", venue:"Sports Complex Court B", description:"Quick 3v3 knockout tournament. Medals, cash prizes, and i-Star merit.", badges:["🏆 Prizes","🎟️ Free","⭐ i-Star"], registration_url:"https://forms.google.com" },
+        { id:"sq-3", title:"Malam Apresiasi Kolej KIY 2026", organizer:"MEP Kolej Ibrahim Yaakub (KIY)", day:"Friday", date:"11/27/2026", time:"8:00 PM – 10:30 PM", venue:"Dewan Kolej KIY", description:"Malam penghargaan urusetia dan pelajar aktif. Persembahan budaya dan jamuan.", badges:["🍔 Free Makan","📜 E-Cert","⭐ i-Star","🎟️ Free"], registration_url:"https://forms.google.com" },
+        { id:"sq-4", title:"Gotong-Royong Perdana UKM", organizer:"Sekretariat Kesukarelawanan UKM", day:"Saturday", date:"11/28/2026", time:"7:30 AM – 12:00 PM", venue:"Padang Kawad UKM", description:"Pembersihan kampus dan penanaman pokok. Bas disediakan dari Foyer Pusanika.", badges:["⭐ i-Star","🍔 Free Makan","🎟️ Free"], registration_url:"https://forms.google.com" },
+        { id:"sq-5", title:"Python for Data Science Workshop", organizer:"Persatuan Mahasiswa Sains Komputer", day:"Monday", date:"11/23/2026", time:"10:00 AM – 1:00 PM", venue:"Makmal Komputer 3, FTSM Aras 2", description:"Hands-on workshop using Python pandas and matplotlib for beginners.", badges:["📜 E-Cert","🍔 Free Makan"], registration_url:"https://forms.google.com" },
+        { id:"sq-6", title:"Debat Piala Naib Canselor 2026", organizer:"KMUKM", day:"Tuesday", date:"11/24/2026", time:"9:00 AM – 5:00 PM", venue:"Dewan DECTAR, Pusanika Aras 5", description:"Pertandingan debat antara fakulti peringkat universiti. Terbuka semua kolej.", badges:["⭐ i-Star","📜 E-Cert","🍔 Free Makan"], registration_url:"https://forms.google.com" }
       ];
       document.getElementById('syncText').textContent = '🟢 LIVE · ' + allEvents.length + ' QUESTS SYNCED';
       render();
@@ -1204,12 +1092,12 @@
 
         const dayHeader = document.createElement('div');
         dayHeader.className = 'day-header';
-        dayHeader.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sunset-vermilion)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${day}`;
+        dayHeader.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sunset-vermilion)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${day}`;
         container.appendChild(dayHeader);
 
         grouped[day].forEach((ev) => {
           const card = document.createElement('div');
-          card.className = 'quest-card';
+          card.className = `quest-card ${getCategoryClass(ev.title, ev.organizer)}`;
 
           const badgesHtml = (ev.badges || []).map(b => {
             let cls = 'badge-default';
@@ -1224,39 +1112,40 @@
           card.innerHTML = `
             <div class="card-banner">${getCategoryBanner(ev.title, ev.organizer)}</div>
             <div class="card-body">
-              <span class="organizer-tag">${ev.organizer}</span>
+              <div class="card-top-row">
+                <span class="organizer-tag">${ev.organizer}</span>
+                <div class="badges-wrap">${badgesHtml}</div>
+              </div>
               <h3 class="quest-title">${ev.title}</h3>
-              <div class="info-row">
-                <span class="info-chip">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#E45226" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div class="quest-meta-line">
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   ${ev.time}
                 </span>
-                <span class="info-chip">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#F3AA20" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span class="meta-dot">·</span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                   ${formatDate(ev.date)}
                 </span>
-                <span class="info-chip info-chip--venue">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#1E6D67" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-dot">·</span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   ${ev.venue}
                 </span>
               </div>
               <p class="quest-desc">${ev.description}</p>
-              <div class="badges-row">${badgesHtml}</div>
-              <div class="card-actions">
-                <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                  ACCEPT QUEST →
+              <div class="card-footer-row">
+                <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register-compact">
+                  Accept Quest →
                 </a>
-                <div class="card-actions-sub">
-                  <button onclick="openCalModal('${ev.id}')" class="btn-cal" title="Sync to Calendar">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    CALENDAR
-                  </button>
-                  <button onclick="copyQuestLink('${ev.id}')" class="btn-share-card" title="Copy link">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-                    SHARE
-                  </button>
-                </div>
+                <button onclick="openCalModal('${ev.id}')" class="btn-icon-action" title="Calendar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  CALENDAR
+                </button>
+                <button onclick="copyQuestLink('${ev.id}')" class="btn-icon-action" title="Share link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                  SHARE
+                </button>
               </div>
             </div>
           `;
@@ -1309,7 +1198,7 @@
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2600);
+      setTimeout(() => t.classList.remove('show'), 2400);
     }
 
     function copyBoardLink() {
@@ -1343,24 +1232,27 @@
       if (e.target === document.getElementById('calModal')) closeCalModal();
     });
 
-    document.getElementById('dayPills').addEventListener('click', (e) => {
+    document.getElementById('filterRow').addEventListener('click', (e) => {
       const btn = e.target.closest('.pill');
-      if (btn) {
-        document.querySelectorAll('#dayPills .pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        activeDay = btn.getAttribute('data-filter');
-        render();
-      }
-    });
+      if (!btn) return;
+      const type = btn.getAttribute('data-type');
+      const val = btn.getAttribute('data-val');
 
-    document.getElementById('lootPills').addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill');
-      if (btn) {
-        document.querySelectorAll('#lootPills .pill').forEach(p => p.classList.remove('active'));
+      if (type === 'day') {
+        document.querySelectorAll('#filterRow .pill[data-type="day"]').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
-        activeLoot = btn.getAttribute('data-loot');
-        render();
+        activeDay = val;
+      } else if (type === 'loot') {
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active');
+          activeLoot = 'all';
+        } else {
+          document.querySelectorAll('#filterRow .pill[data-type="loot"]').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          activeLoot = val;
+        }
       }
+      render();
     });
 
     document.getElementById('searchInput').addEventListener('input', (e) => {

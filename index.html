@@ -3,492 +3,811 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidequestki | Weekly Campus Adventure &amp; Quest Board</title>
-  <meta name="description" content="Discover campus workshops, club events, sports tournaments, and free food this week. 1-tap registration and calendar sync.">
+  <title>SIDEQUESTKI — Neo-Ukiyo-e Campus Quest Board | UKM</title>
+  <meta name="description" content="Discover campus workshops, club events, sports tournaments, and free food this week at UKM. 1-tap registration and calendar sync.">
+  <link rel="canonical" href="https://sidequestki.github.io/sidequestki/">
+  <meta property="og:title" content="SIDEQUESTKI — Campus Quest Board | UKM">
+  <meta property="og:description" content="Your weekly campus adventure board. Discover events, earn i-Star merit, free makan, and e-certs.">
+  <meta property="og:url" content="https://sidequestki.github.io/sidequestki/">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* =========================================================================
-       DISNEY CRUISE LINE INSPIRED LIGHT LUXURY THEME
-       Palette: Deep Ocean Navy (#001E3D), Royal Blue (#0064D2), 
-                Nautical Gold (#D48B08), Cloud White (#FFFFFF), Mist (#F4F7FB)
-       ========================================================================= */
+    /* ===================================================================
+       CSS VARIABLES — NEO-UKIYO-E KAIJU QUEST BOARD
+       =================================================================== */
     :root {
-      --bg-base: #F4F7FB;
-      --card-bg: #FFFFFF;
-      --card-border: #E2E8F0;
-      --card-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-      --card-hover-shadow: 0 10px 28px rgba(0, 53, 102, 0.12);
-      
-      --navy-deep: #001D3D;
-      --navy-medium: #003566;
-      --blue-royal: #0060DF;
-      --blue-hover: #0047AB;
-      --gold-disney: #D97706;
-      --gold-bg: #FEF3C7;
-      
-      --text-title: #0F172A;
-      --text-body: #334155;
-      --text-muted: #64748B;
-      --text-faint: #94A3B8;
-      
-      --badge-food-bg: #FEF3C7;
-      --badge-food-text: #B45309;
-      --badge-food-border: #FDE68A;
-
-      --badge-merit-bg: #ECFDF5;
-      --badge-merit-text: #047857;
-      --badge-merit-border: #A7F3D0;
-
-      --badge-cert-bg: #EFF6FF;
-      --badge-cert-text: #1D4ED8;
-      --badge-cert-border: #BFDBFE;
+      --bg-washi: #F6EFE2;
+      --ink-black: #08181E;
+      --abyssal-teal: #0F2D37;
+      --sunset-vermilion: #E45226;
+      --kaiju-gold: #F3AA20;
+      --seafoam-jade: #1E6D67;
+      --fin-mint: #7CC5B3;
+      --cream-foam: #FFF8ED;
+      --muted-sand: #D4C9B4;
+      --danger-red: #C23616;
+      --shadow-hard: 4px 4px 0px var(--ink-black);
+      --shadow-hover: 6px 6px 0px var(--ink-black);
+      --border-thick: 2.5px solid var(--ink-black);
+      --radius-card: 6px;
+      --radius-pill: 999px;
+      --font-display: 'Anton', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg-base); color: var(--text-body); min-height: 100vh; display: flex; flex-direction: column; line-height: 1.5; }
-    .container { width: 100%; max-width: 920px; margin: 0 auto; padding: 0 16px; }
+    /* RESET & BASE */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-washi);
+      color: var(--ink-black);
+      min-height: 100vh;
+      line-height: 1.55;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Washi paper grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
 
-    /* Top Announcement Bar (Nautical Ribbon) */
-    .cutoff-banner {
-      background: linear-gradient(90deg, #001D3D 0%, #003566 100%);
-      color: #E2E8F0;
-      padding: 9px 16px;
-      font-size: 0.8rem;
+    .container { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    a { color: var(--sunset-vermilion); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ===================================================================
+       NAVBAR — Woodblock header strip
+       =================================================================== */
+    .navbar {
+      background: var(--abyssal-teal);
+      border-bottom: 3px solid var(--ink-black);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .navbar-brand svg { flex-shrink: 0; }
+    .nav-title {
+      font-family: var(--font-display);
+      color: var(--kaiju-gold);
+      font-size: 1.35rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .nav-title span { color: var(--sunset-vermilion); }
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
+    .nav-btn {
+      background: var(--sunset-vermilion);
+      color: #fff;
+      border: var(--border-thick);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--ink-black);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px var(--ink-black); }
+    .nav-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+    .nav-btn--outline {
+      background: transparent;
+      color: var(--fin-mint);
+      border-color: var(--fin-mint);
+      box-shadow: 2px 2px 0px rgba(124,197,179,0.3);
+    }
+    .nav-btn--outline:hover { background: rgba(124,197,179,0.1); }
+
+    /* ===================================================================
+       HERO — Ukiyo-e Poster Illustration Section
+       =================================================================== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--abyssal-teal) 0%, #0a2029 55%, var(--seafoam-jade) 100%);
+      padding: 48px 16px 80px;
       text-align: center;
+      border-bottom: 3px solid var(--ink-black);
+    }
+    .hero-sunburst {
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140%;
+      max-width: 900px;
+      opacity: 0.2;
+      pointer-events: none;
+      animation: sunSpin 120s linear infinite;
+    }
+    @keyframes sunSpin { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      color: var(--kaiju-gold);
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-eyebrow .dot { width: 6px; height: 6px; background: var(--kaiju-gold); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      color: var(--cream-foam);
+      font-size: clamp(2.2rem, 8vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+    }
+    .hero h1 .vermilion { color: var(--sunset-vermilion); }
+    .hero h1 .gold { color: var(--kaiju-gold); }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      color: var(--fin-mint);
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 12px auto 24px;
+      line-height: 1.5;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-hero {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 12px 24px;
+      border: var(--border-thick);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      box-shadow: var(--shadow-hard);
+      transition: all 0.18s var(--ease-bounce);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      min-height: 48px;
+      text-decoration: none;
+    }
+    .btn-hero:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover); }
+    .btn-hero:active { transform: translate(2px, 2px); box-shadow: none; }
+    .btn-hero--primary { background: var(--sunset-vermilion); color: #fff; }
+    .btn-hero--secondary { background: var(--cream-foam); color: var(--ink-black); }
+
+    /* Wave divider between hero and content */
+    .wave-divider {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      z-index: 3;
+    }
+
+    /* ===================================================================
+       SYNC BAR — Live data indicator
+       =================================================================== */
+    .sync-bar {
+      background: var(--ink-black);
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      border-bottom: 2px solid #E8A200;
-      letter-spacing: 0.01em;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--fin-mint);
+      letter-spacing: 1px;
     }
-    .cutoff-banner strong { color: #FCD34D; font-weight: 700; }
+    .sync-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px rgba(16,185,129,0.6);
+      animation: pulse 2s ease-in-out infinite;
+    }
 
-    /* Header (Naval Luxury Style) */
-    header {
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--card-border);
+    /* ===================================================================
+       FILTER BAR — Sticky horizontal pills
+       =================================================================== */
+    .filter-section {
       position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      top: 56px;
+      z-index: 999;
+      background: var(--bg-washi);
+      border-bottom: 2.5px solid var(--ink-black);
+      padding: 14px 16px 12px;
     }
+    .filter-inner { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 
-    .header-inner {
-      padding: 18px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-group { display: flex; flex-direction: column; gap: 3px; }
-    
-    .brand-title {
-      font-size: 1.55rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--navy-deep);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 9999px;
-      background: #E8A200;
-      color: #001D3D;
-      letter-spacing: 0.05em;
-    }
-
-    .brand-subtitle { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
-
-    .sync-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.73rem;
-      color: #059669;
-      font-weight: 600;
-      margin-top: 2px;
-    }
-    .sync-dot { width: 7px; height: 7px; background: #10B981; border-radius: 50%; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
-
-    .btn-submit {
-      background: linear-gradient(135deg, #0060DF 0%, #0047AB 100%);
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border-radius: 9999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 96, 223, 0.25);
-    }
-    .btn-submit:hover {
-      background: #003E99;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 96, 223, 0.35);
-    }
-
-    /* Search & Segmented Filter Bar (Cruise Finder Style) */
-    .finder-box {
-      background: #FFFFFF;
-      border-radius: 18px;
-      border: 1px solid var(--card-border);
-      padding: 16px 20px;
-      box-shadow: var(--card-shadow);
-      margin: 22px 0 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .search-wrapper { position: relative; }
+    .search-row { position: relative; }
     .search-input {
       width: 100%;
-      background: #F8FAFC;
-      border: 1px solid #CBD5E1;
-      border-radius: 12px;
-      padding: 12px 18px 12px 42px;
-      color: var(--text-title);
-      font-size: 0.92rem;
+      background: var(--cream-foam);
+      border: var(--border-thick);
+      border-radius: 8px;
+      padding: 11px 16px 11px 44px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--ink-black);
       outline: none;
-      transition: all 0.2s;
+      box-shadow: 2px 2px 0px var(--ink-black);
+      transition: box-shadow 0.15s ease;
     }
-    .search-input:focus {
-      background: #FFFFFF;
-      border-color: var(--blue-royal);
-      box-shadow: 0 0 0 3px rgba(0, 96, 223, 0.15);
-    }
-    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1rem; }
+    .search-input::placeholder { color: var(--muted-sand); }
+    .search-input:focus { box-shadow: 3px 3px 0px var(--sunset-vermilion); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
 
-    /* Pill Groups (Clean Maritime Tabs) */
     .filter-label {
-      font-size: 0.72rem;
-      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      letter-spacing: 2px;
+      color: var(--abyssal-teal);
+      margin-bottom: 2px;
+      font-weight: 600;
     }
-
-    .pill-group {
+    .pill-row {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 2px;
       scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
     }
-    .pill-group::-webkit-scrollbar { display: none; }
+    .pill-row::-webkit-scrollbar { display: none; }
 
     .pill {
-      background: #F1F5F9;
-      border: 1px solid #E2E8F0;
-      color: #475569;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.8rem;
+      font-family: var(--font-body);
       font-weight: 600;
+      font-size: 0.74rem;
+      padding: 7px 14px;
+      border: 2px solid var(--ink-black);
+      border-radius: var(--radius-pill);
+      background: var(--cream-foam);
+      color: var(--ink-black);
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.15s ease;
-      user-select: none;
+      box-shadow: 1.5px 1.5px 0px var(--ink-black);
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
-    .pill:hover {
-      background: #E2E8F0;
-      color: var(--navy-deep);
-    }
+    .pill:hover { background: var(--kaiju-gold); color: var(--ink-black); }
     .pill.active {
-      background: var(--navy-deep);
-      color: #FFFFFF;
-      border-color: var(--navy-deep);
-      box-shadow: 0 2px 8px rgba(0, 29, 61, 0.25);
+      background: var(--abyssal-teal);
+      color: var(--kaiju-gold);
+      border-color: var(--kaiju-gold);
+      box-shadow: 2px 2px 0px var(--kaiju-gold);
     }
 
-    /* Quests List */
-    .quests-section { flex: 1; padding: 10px 0 40px; }
+    /* ===================================================================
+       QUEST CARDS — Collectible mini-poster style
+       =================================================================== */
+    .quests-section { padding: 24px 0 48px; }
+    .quests-grid { display: flex; flex-direction: column; gap: 20px; }
 
     .day-header {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--navy-deep);
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--abyssal-teal);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin: 26px 0 12px;
+      letter-spacing: 3px;
+      padding: 10px 0 4px;
+      border-bottom: 2.5px solid var(--ink-black);
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top: 12px;
     }
-    .day-header::after { content: ''; flex: 1; height: 1.5px; background: #E2E8F0; }
+    .day-header:first-child { margin-top: 0; }
 
-    .quests-grid { display: flex; flex-direction: column; gap: 16px; }
-
-    /* Quest Card (Disney Cruise Itinerary Style) */
     .quest-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: all 0.25s ease;
-      box-shadow: var(--card-shadow);
+      background: var(--cream-foam);
+      border: var(--border-thick);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+      transition: all 0.2s var(--ease-bounce);
       position: relative;
     }
     .quest-card:hover {
-      border-color: #CBD5E1;
-      transform: translateY(-2px);
-      box-shadow: var(--card-hover-shadow);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
+    /* Category poster banner on each card */
+    .card-banner {
+      height: 72px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 2.5px solid var(--ink-black);
     }
+    .card-banner svg { width: 100%; height: 100%; display: block; }
+
+    .card-body { padding: 14px 16px 16px; }
 
     .organizer-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--blue-royal);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--seafoam-jade);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      display: inline-block;
-      margin-bottom: 4px;
+      letter-spacing: 1.5px;
+      font-weight: 600;
     }
-
     .quest-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--navy-deep);
-      line-height: 1.35;
-      letter-spacing: -0.01em;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--ink-black);
+      margin: 4px 0 10px;
     }
 
-    .itinerary-row {
+    .info-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      font-size: 0.85rem;
-      color: var(--text-body);
-      background: #F8FAFC;
-      border: 1px solid #EDF2F7;
-      padding: 10px 14px;
-      border-radius: 10px;
+      gap: 6px 16px;
+      margin-bottom: 10px;
     }
-
-    .info-item { display: flex; align-items: center; gap: 6px; font-weight: 500; }
-    .info-item strong { color: var(--text-title); font-weight: 700; }
+    .info-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--abyssal-teal);
+      font-weight: 500;
+    }
+    .info-chip svg { flex-shrink: 0; }
 
     .quest-desc {
-      font-size: 0.88rem;
-      color: #475569;
-      line-height: 1.55;
+      font-size: 0.82rem;
+      color: #3a4a50;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    /* Badges Row (Cruise Amenities) */
-    .badges-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    /* Badges */
+    .badges-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
     .badge {
-      font-size: 0.74rem;
-      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 600;
       padding: 4px 10px;
-      border-radius: 8px;
-      background: #F1F5F9;
-      color: #334155;
-      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--ink-black);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .badge-food { background: var(--badge-food-bg); color: var(--badge-food-text); border-color: var(--badge-food-border); }
-    .badge-merit { background: var(--badge-merit-bg); color: var(--badge-merit-text); border-color: var(--badge-merit-border); }
-    .badge-cert { background: var(--badge-cert-bg); color: var(--badge-cert-text); border-color: var(--badge-cert-border); }
+    .badge-food { background: #FEF3C7; color: #92400E; border-color: #D97706; }
+    .badge-merit { background: #D1FAE5; color: #065F46; border-color: #059669; }
+    .badge-cert { background: #DBEAFE; color: #1E40AF; border-color: #3B82F6; }
+    .badge-free { background: #FCE7F3; color: #9D174D; border-color: #EC4899; }
+    .badge-default { background: var(--bg-washi); color: var(--abyssal-teal); }
 
-    /* Card Actions */
+    /* Card actions */
     .card-actions {
       display: flex;
-      gap: 10px;
-      padding-top: 6px;
-      border-top: 1px solid #F1F5F9;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-
     .btn-register {
-      flex: 1.2;
-      background: var(--blue-royal);
-      color: #FFFFFF;
-      text-align: center;
-      padding: 11px 18px;
-      font-size: 0.88rem;
+      flex: 1;
+      min-width: 160px;
+      background: var(--sunset-vermilion);
+      color: #fff;
+      border: var(--border-thick);
+      border-radius: var(--radius-pill);
+      padding: 10px 18px;
+      font-family: var(--font-body);
       font-weight: 700;
-      border-radius: 9999px;
-      text-decoration: none;
-      transition: all 0.2s;
+      font-size: 0.78rem;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--ink-black);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       display: inline-flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      box-shadow: 0 2px 8px rgba(0, 96, 223, 0.2);
+      min-height: 44px;
+      text-decoration: none;
     }
-    .btn-register:hover {
-      background: var(--blue-hover);
-      box-shadow: 0 4px 12px rgba(0, 96, 223, 0.3);
-    }
+    .btn-register:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0px var(--ink-black); background: #c9421b; }
+    .btn-register:active { transform: translate(2px,2px); box-shadow: none; }
 
     .btn-cal {
-      flex: 0.8;
-      background: #FFFFFF;
-      color: var(--navy-deep);
-      border: 1.5px solid #CBD5E1;
+      background: var(--cream-foam);
+      color: var(--abyssal-teal);
+      border: var(--border-thick);
+      border-radius: var(--radius-pill);
       padding: 10px 14px;
-      font-size: 0.82rem;
+      font-family: var(--font-body);
       font-weight: 700;
-      border-radius: 9999px;
+      font-size: 0.78rem;
       cursor: pointer;
+      box-shadow: 2px 2px 0px var(--ink-black);
+      transition: all 0.15s ease;
       display: inline-flex;
-      justify-content: center;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
-      text-decoration: none;
+      gap: 5px;
+      min-height: 44px;
       white-space: nowrap;
     }
-    .btn-cal:hover {
-      background: #F8FAFC;
-      border-color: var(--navy-deep);
-    }
+    .btn-cal:hover { background: var(--kaiju-gold); color: var(--ink-black); }
 
-    /* Modals */
+    .btn-share-card {
+      background: transparent;
+      border: 2px solid var(--muted-sand);
+      border-radius: var(--radius-pill);
+      padding: 8px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--abyssal-teal);
+      transition: all 0.15s ease;
+      min-height: 44px;
+    }
+    .btn-share-card:hover { border-color: var(--seafoam-jade); background: rgba(30,109,103,0.05); }
+
+    /* ===================================================================
+       EMPTY STATE
+       =================================================================== */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      display: none;
+    }
+    .empty-state h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--abyssal-teal);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .empty-state p { color: var(--muted-sand); font-size: 0.88rem; }
+
+    /* ===================================================================
+       MODALS — Submit Quest / Calendar Sync
+       =================================================================== */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 29, 61, 0.45);
-      backdrop-filter: blur(4px);
-      z-index: 100;
+      inset: 0;
+      background: rgba(8,24,30,0.7);
+      z-index: 2000;
       align-items: center;
       justify-content: center;
       padding: 16px;
+      backdrop-filter: blur(4px);
     }
     .modal-box {
-      background: #FFFFFF;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      max-width: 480px;
+      background: var(--cream-foam);
+      border: var(--border-thick);
+      border-radius: 10px;
+      box-shadow: 6px 6px 0px var(--ink-black);
+      padding: 28px 24px;
+      max-width: 440px;
       width: 100%;
-      padding: 26px;
       position: relative;
-      border: 1px solid var(--card-border);
+      max-height: 90vh;
+      overflow-y: auto;
     }
     .modal-close {
       position: absolute;
-      top: 18px; right: 18px;
-      background: #F1F5F9; border: none;
-      color: var(--text-muted); font-size: 1.2rem; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 50%;
+      top: 12px; right: 14px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--ink-black);
+      line-height: 1;
+      min-width: 44px; min-height: 44px;
       display: flex; align-items: center; justify-content: center;
     }
-    .modal-close:hover { background: #E2E8F0; color: var(--text-title); }
-
-    .modal-title { font-size: 1.3rem; font-weight: 800; color: var(--navy-deep); margin-bottom: 6px; }
-    .modal-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
-
-    .cal-option-btn {
-      width: 100%;
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      color: var(--navy-deep);
-      font-size: 0.9rem;
-      font-weight: 700;
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .modal-desc { font-size: 0.85rem; color: #3a4a50; line-height: 1.5; margin-bottom: 18px; }
+    .modal-info-box {
+      background: var(--bg-washi);
+      border: 2px solid var(--muted-sand);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 18px;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--abyssal-teal);
+    }
+    .cal-option {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      padding: 14px;
+      border: var(--border-thick);
+      border-radius: 8px;
+      background: var(--cream-foam);
+      box-shadow: 2px 2px 0px var(--ink-black);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
       text-decoration: none;
-      box-sizing: border-box;
+      color: var(--ink-black);
+      margin-bottom: 10px;
+      font-family: var(--font-body);
+      min-height: 56px;
     }
-    .cal-option-btn:hover { background: #FFFFFF; border-color: var(--blue-royal); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .cal-option:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0px var(--ink-black); background: #FEF3C7; }
+    .cal-option-label { font-weight: 700; font-size: 0.85rem; }
+    .cal-option-sub { font-size: 0.7rem; color: var(--muted-sand); }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--card-border);
-      padding: 28px 0;
-      background: #FFFFFF;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    /* ===================================================================
+       TOAST NOTIFICATION
+       =================================================================== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--ink-black);
+      color: var(--kaiju-gold);
+      border: 2px solid var(--kaiju-gold);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      z-index: 3000;
+      box-shadow: 4px 4px 0px var(--kaiju-gold);
+      pointer-events: none;
+      transition: transform 0.4s var(--ease-bounce), opacity 0.4s ease;
+      opacity: 0;
       text-align: center;
-      margin-top: auto;
+      max-width: 90%;
     }
-    .footer-disclaimer { max-width: 650px; margin: 8px auto 0; line-height: 1.5; font-size: 0.75rem; color: #94A3B8; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    @media (max-width: 600px) {
-      .header-inner { flex-direction: column; align-items: flex-start; }
-      .btn-submit { width: 100%; justify-content: center; }
-      .card-actions { flex-direction: column; }
+    /* ===================================================================
+       FOOTER
+       =================================================================== */
+    footer {
+      background: var(--abyssal-teal);
+      border-top: 3px solid var(--ink-black);
+      padding: 32px 16px 24px;
+      text-align: center;
+      color: var(--fin-mint);
     }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--kaiju-gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .footer-url {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted-sand);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .footer-stamp {
+      display: inline-block;
+      border: 2px solid var(--sunset-vermilion);
+      color: var(--sunset-vermilion);
+      padding: 4px 14px;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transform: rotate(-3deg);
+      opacity: 0.7;
+      margin-bottom: 14px;
+    }
+    .footer-disclaimer {
+      font-size: 0.68rem;
+      color: rgba(124,197,179,0.5);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* ===================================================================
+       DESKTOP RESPONSIVE (768px+)
+       =================================================================== */
+    @media (min-width: 768px) {
+      .hero { padding: 64px 24px 100px; }
+      .hero h1 { font-size: 3.5rem; }
+      .filter-section { padding: 16px 24px 14px; }
+      .filter-inner { flex-direction: column; }
+      .quests-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .day-header { grid-column: 1 / -1; }
+      .card-banner { height: 80px; }
+      .nav-title { font-size: 1.5rem; }
+    }
+    @media (min-width: 1024px) {
+      .hero h1 { font-size: 4.2rem; }
+      .quest-title { font-size: 1.25rem; }
+    }
+
+    /* ===================================================================
+       MICRO-ANIMATIONS
+       =================================================================== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .quest-card { animation: fadeInUp 0.4s ease both; }
+    .quest-card:nth-child(2) { animation-delay: 0.05s; }
+    .quest-card:nth-child(3) { animation-delay: 0.1s; }
+    .quest-card:nth-child(4) { animation-delay: 0.15s; }
+    .quest-card:nth-child(5) { animation-delay: 0.2s; }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement Banner -->
-  <div class="cutoff-banner">
-    <span>🧭</span>
-    <span><strong>Friday Cutoff:</strong> Submissions close every <strong>Friday at 11:59 PM</strong>. The Weekly Monday Blast drops at 8:00 AM.</span>
-  </div>
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <!-- Custom Kaiju Fin SVG Logo -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="13" fill="#F3AA20" stroke="#08181E" stroke-width="2"/>
+        <path d="M14 4L18 12L14 10L10 12L14 4Z" fill="#E45226" stroke="#08181E" stroke-width="1.2"/>
+        <path d="M8 16C8 16 10 20 14 20C18 20 20 16 20 16" stroke="#08181E" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 14L14 20" stroke="#08181E" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="11" cy="14" r="1.2" fill="#08181E"/>
+        <circle cx="17" cy="14" r="1.2" fill="#08181E"/>
+      </svg>
+      <div class="nav-title">SIDEQUEST<span>KI</span></div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn nav-btn--outline" onclick="copyBoardLink()" aria-label="Copy Quest Board Link">
+        <!-- Share icon SVG -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        SHARE
+      </button>
+      <button class="nav-btn" onclick="openSubmitModal()" aria-label="Submit a Quest">
+        <!-- Plus icon SVG -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        DROP QUEST
+      </button>
+    </div>
+  </nav>
 
-  <!-- Header -->
-  <header>
-    <div class="container header-inner">
-      <div class="brand-group">
-        <div class="brand-title">
-          <span>🚢</span>
-          <span>SIDEQUESTKI</span>
-          <span class="brand-badge">WEEK 5 DROP</span>
-        </div>
-        <p class="brand-subtitle">Your weekly campus quest board. Discover workshops, sports &amp; free makan.</p>
-        <div class="sync-status">
-          <span class="sync-dot"></span>
-          <span id="syncText">Connected to Live Google Sheet</span>
-        </div>
-      </div>
-      <div>
-        <button class="btn-submit" onclick="openSubmitModal()">
-          <span>✍️</span> Submit a Sidequest
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <!-- Sunburst SVG (radiating rays) -->
+    <svg class="hero-sunburst" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="400" cy="400" r="120" fill="#F3AA20" opacity="0.5"/>
+      <g opacity="0.6">
+        <polygon points="400,400 350,0 450,0" fill="#E45226" opacity="0.7"/>
+        <polygon points="400,400 500,10 580,80" fill="#F3AA20" opacity="0.6"/>
+        <polygon points="400,400 650,150 700,250" fill="#E45226" opacity="0.5"/>
+        <polygon points="400,400 750,350 750,450" fill="#F3AA20" opacity="0.6"/>
+        <polygon points="400,400 700,550 650,650" fill="#E45226" opacity="0.5"/>
+        <polygon points="400,400 580,720 500,790" fill="#F3AA20" opacity="0.6"/>
+        <polygon points="400,400 450,800 350,800" fill="#E45226" opacity="0.7"/>
+        <polygon points="400,400 300,790 220,720" fill="#F3AA20" opacity="0.6"/>
+        <polygon points="400,400 150,650 100,550" fill="#E45226" opacity="0.5"/>
+        <polygon points="400,400 50,450 50,350" fill="#F3AA20" opacity="0.6"/>
+        <polygon points="400,400 100,250 150,150" fill="#E45226" opacity="0.5"/>
+        <polygon points="400,400 220,80 300,10" fill="#F3AA20" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <!-- Layered mountain & wave SVG -->
+    <svg style="position:absolute;bottom:40px;left:0;width:100%;opacity:0.15;pointer-events:none;z-index:1" viewBox="0 0 960 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,200 L0,120 Q120,40 240,100 Q360,160 480,80 Q600,0 720,60 Q840,120 960,80 L960,200Z" fill="#7CC5B3"/>
+      <path d="M0,200 L0,150 Q160,90 320,140 Q480,190 640,110 Q800,30 960,120 L960,200Z" fill="#1E6D67"/>
+      <path d="M0,200 L0,170 Q200,130 400,170 Q600,210 800,150 Q900,120 960,160 L960,200Z" fill="#0F2D37"/>
+    </svg>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="dot"></span> WEEKLY CAMPUS QUEST BOARD — UKM</div>
+      <h1>DISCOVER<br>YOUR NEXT<br><span class="vermilion">SIDE</span><span class="gold">QUEST</span></h1>
+      <p class="hero-sub">Browse workshops, club events, sports tournaments, and free makan this week. 1-tap register. Earn i-Star merit. Never miss a campus sidequest again.</p>
+      <div class="hero-cta-row">
+        <a href="#quests" class="btn-hero btn-hero--primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          BROWSE QUESTS
+        </a>
+        <button class="btn-hero btn-hero--secondary" onclick="openSubmitModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          DROP YOUR QUEST
         </button>
       </div>
     </div>
-  </header>
 
-  <!-- Search & Segmented Filters (Cruise Finder) -->
-  <div class="container">
-    <div class="finder-box">
-      <!-- Search Input -->
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search by event, club, topic, or venue...">
+    <!-- Wave divider -->
+    <svg class="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80Z" fill="var(--bg-washi)"/>
+    </svg>
+  </section>
+
+  <!-- ==================== SYNC BAR ==================== -->
+  <div class="sync-bar">
+    <span class="sync-dot"></span>
+    <span id="syncText">CONNECTING TO LIVE SHEET...</span>
+  </div>
+
+  <!-- ==================== FILTER BAR ==================== -->
+  <div class="filter-section">
+    <div class="filter-inner">
+      <!-- Search -->
+      <div class="search-row">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4C9B4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search quests, clubs, kolej, venues...">
       </div>
-
-      <!-- Day Filter Pills -->
+      <!-- Day pills -->
       <div>
-        <div class="filter-label">Filter by Departure / Day:</div>
-        <div class="pill-group" id="dayPills">
-          <button class="pill active" data-filter="all">All Quests</button>
-          <button class="pill" data-filter="today">Today</button>
+        <div class="filter-label">FILTER BY DAY</div>
+        <div class="pill-row" id="dayPills">
+          <button class="pill active" data-filter="all">All Days</button>
+          <button class="pill" data-filter="today">⚡ Today</button>
           <button class="pill" data-filter="Monday">Mon</button>
           <button class="pill" data-filter="Tuesday">Tue</button>
           <button class="pill" data-filter="Wednesday">Wed</button>
@@ -498,231 +817,281 @@
           <button class="pill" data-filter="Sunday">Sun</button>
         </div>
       </div>
-
-      <!-- Loot Filter Pills -->
+      <!-- Loot pills -->
       <div>
-        <div class="filter-label">Filter by Perks &amp; Amenities:</div>
-        <div class="pill-group" id="lootPills">
+        <div class="filter-label">FILTER BY PERKS & LOOT</div>
+        <div class="pill-row" id="lootPills">
           <button class="pill active" data-loot="all">All Perks</button>
-          <button class="pill" data-loot="Food">🍔 Free Makan</button>
-          <button class="pill" data-loot="Merit">🎖️ Merits</button>
-          <button class="pill" data-loot="Cert">📜 E-Cert</button>
-          <button class="pill" data-loot="Free Entry">🎟️ Free Entry</button>
+          <button class="pill" data-loot="Food">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 13h18l-1.5 7H4.5L3 13z"/><path d="M3 13c0-4 4-8 9-8s9 4 9 8"/><line x1="12" y1="5" x2="12" y2="2"/></svg>
+            Free Makan
+          </button>
+          <button class="pill" data-loot="Merit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            i-Star Merit
+          </button>
+          <button class="pill" data-loot="Cert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="7" y1="10" x2="17" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/></svg>
+            E-Cert
+          </button>
+          <button class="pill" data-loot="Free Entry">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+            Free Entry
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Quests Container -->
-  <main class="container quests-section">
-    <div id="questsContainer" class="quests-grid">
-      <!-- Dynamically populated from Google Sheet -->
-    </div>
-    <div id="emptyState" style="display: none; text-align: center; padding: 50px 20px; color: var(--text-faint);">
-      <h3 id="emptyTitle" style="color: var(--navy-deep); margin-bottom: 8px;">No sidequests found</h3>
-      <p id="emptyDesc" style="color: var(--text-muted);">Try searching for a different keyword or resetting your filters.</p>
+  <!-- ==================== QUEST CARDS ==================== -->
+  <main class="container quests-section" id="quests">
+    <div class="quests-grid" id="questsContainer"></div>
+    <div class="empty-state" id="emptyState">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#D4C9B4" stroke-width="1.5" stroke-linecap="round" style="margin:0 auto 16px"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"/></svg>
+      <h3>NO QUESTS FOUND</h3>
+      <p>Try a different keyword or reset your filters above.</p>
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- ==================== FOOTER ==================== -->
   <footer>
     <div class="container">
-      <p><strong>SIDEQUESTKI</strong> &bull; Independent Campus Event Curation &bull; Powered by Google Sheets Live</p>
+      <div class="footer-brand">SIDEQUESTKI</div>
+      <div class="footer-url">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.07.01l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.07-.01l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        sidequestki.github.io/sidequestki
+      </div>
+      <div class="footer-stamp">CAMPUS QUEST BOARD — UKM</div>
+      <p style="font-size:0.78rem;margin-bottom:16px;color:var(--fin-mint);">
+        <button onclick="copyBoardLink()" style="all:unset;cursor:pointer;text-decoration:underline;color:var(--kaiju-gold);">📋 Copy Board Link</button>
+        &nbsp;•&nbsp;
+        <button onclick="openSubmitModal()" style="all:unset;cursor:pointer;text-decoration:underline;color:var(--kaiju-gold);">📤 Submit Your Event</button>
+      </p>
       <p class="footer-disclaimer">
-        Disclaimer: Sidequestki is an independent student event directory. We are not responsible for event cancellations, venue updates, or ticketing operations managed by external organizers. For specific inquiries, please contact the listed club PIC directly.
+        Disclaimer: Sidequestki is an independent student event directory. We are not responsible for event cancellations, venue updates, or ticketing managed by external organizers. Contact the listed club PIC directly for specific inquiries.
       </p>
     </div>
   </footer>
 
-  <!-- Submission Modal -->
+  <!-- ==================== SUBMIT QUEST MODAL ==================== -->
   <div class="modal-overlay" id="submitModal">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeSubmitModal()">&times;</button>
-      <h3 class="modal-title">List Your Sidequest ⚔️</h3>
-      <p class="modal-desc">Are you organizing a workshop, tournament, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast.</p>
-      <div style="background: #F8FAFC; border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; margin-bottom: 18px; font-size: 0.82rem; display: flex; flex-direction: column; gap: 6px; color: #475569;">
-        <div>⏰ <strong>Cutoff:</strong> Every Friday at 11:59 PM sharp for next week's drop.</div>
-        <div>🔗 <strong>Links:</strong> Ensure your registration URL is public.</div>
-        <div>💰 <strong>Cost:</strong> 100% Free standard listing for student organizations.</div>
+      <button class="modal-close" onclick="closeSubmitModal()" aria-label="Close">&times;</button>
+      <h3 class="modal-title">⚔️ DROP YOUR QUEST</h3>
+      <p class="modal-desc">Are you organizing a workshop, tournament, club gathering, or campus talk? Submit your event to be featured in next week's Monday Blast on the live Quest Board.</p>
+      <div class="modal-info-box">
+        <div>⏰ <strong>Cutoff:</strong> Every Friday at 11:59 PM sharp</div>
+        <div>🔗 <strong>Links:</strong> Ensure your registration URL is public</div>
+        <div>💰 <strong>Cost:</strong> 100% Free listing for student organizations</div>
+        <div>🏛️ <strong>Board URL:</strong> <span style="font-family:var(--font-mono);font-size:0.68rem;">sidequestki.github.io/sidequestki</span></div>
       </div>
-      <a href="https://docs.google.com/forms/d/1hQe7knWmFV-z4GF7nBAYiouuJVkOCvv_y7kufOU3ABg/viewform" target="_blank" rel="noopener" class="btn-register" style="width: 100%;">
-        Open Organizer Submission Form &rarr;
+      <a id="submitFormLink" href="#" target="_blank" rel="noopener" class="btn-register" style="width:100%;justify-content:center;margin-bottom:10px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        OPEN SUBMISSION FORM →
       </a>
+      <button onclick="copyBoardLink();closeSubmitModal();" class="btn-cal" style="width:100%;justify-content:center;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        COPY BOARD LINK
+      </button>
     </div>
   </div>
 
-  <!-- Smart Calendar Modal -->
+  <!-- ==================== CALENDAR SYNC MODAL ==================== -->
   <div class="modal-overlay" id="calModal">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeCalModal()">&times;</button>
-      <h3 class="modal-title">📅 Add to Calendar</h3>
+      <button class="modal-close" onclick="closeCalModal()" aria-label="Close">&times;</button>
+      <h3 class="modal-title">📅 ADD TO CALENDAR</h3>
       <p class="modal-desc" id="calModalEventName">Choose your preferred calendar service:</p>
-
-      <a id="btnGCal" href="#" target="_blank" rel="noopener" class="cal-option-btn">
-        <span style="font-size: 1.4rem;">🌐</span>
+      <a id="btnGCal" href="#" target="_blank" rel="noopener" class="cal-option">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E45226" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <div>
-          <div>Google Calendar</div>
-          <div style="font-size: 0.74rem; color: var(--text-muted); font-weight: normal;">Syncs to Google account with 1-hr reminder</div>
+          <div class="cal-option-label">Google Calendar</div>
+          <div class="cal-option-sub">Syncs to Google account with 1-hr reminder</div>
         </div>
       </a>
-
-      <button id="btnICal" onclick="downloadICal()" class="cal-option-btn">
-        <span style="font-size: 1.4rem;">🍏</span>
-        <div style="text-align: left;">
-          <div>Apple Calendar / Outlook / Mobile</div>
-          <div style="font-size: 0.74rem; color: var(--text-muted); font-weight: normal;">Downloads .ics file that opens directly in your calendar</div>
+      <button id="btnICal" onclick="downloadICal()" class="cal-option" style="width:100%;text-align:left;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1E6D67" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14l2 2 4-4"/></svg>
+        <div>
+          <div class="cal-option-label">Apple / Outlook / Mobile</div>
+          <div class="cal-option-sub">Downloads .ics file for any calendar app</div>
         </div>
       </button>
     </div>
   </div>
 
-  <script>
-    // LIVE PUBLISHED GOOGLE SHEET CSV LINK
-    const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2kmpCC9d1jcdflUKjMNjGIPnLbuq81mGdUKyw_U4n4Jvfia_t8Di-nH3reBbUeWYbu6F8wWANC9-k/pub?output=csv";
+  <!-- ==================== TOAST ==================== -->
+  <div class="toast" id="toast"></div>
 
-    // State
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // =====================================================================
+    // CONFIG — Live Google Sheet CSV & Submission Form URL
+    // =====================================================================
+    const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2kmpCC9d1jcdflUKjMNjGIPnLbuq81mGdUKyw_U4n4Jvfia_t8Di-nH3reBbUeWYbu6F8wWANC9-k/pub?output=csv";
+    const SUBMIT_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeaExIb5EkVXGFz-ctZsnqGH1fmgLCGdUzi9eqnR_OLszo_ow/viewform";
+    const BOARD_URL = "https://sidequestki.github.io/sidequestki/";
+
+    // Set submission form link
+    document.getElementById('submitFormLink').href = SUBMIT_FORM_URL;
+
+    // =====================================================================
+    // STATE
+    // =====================================================================
     let allEvents = [];
     let activeDay = 'all';
     let activeLoot = 'all';
     let searchQuery = '';
     let selectedCalEvent = null;
 
-    // Robust CSV Parser (RFC 4180 compliant)
+    // =====================================================================
+    // INLINE SVG CARD BANNERS (Bespoke Ukiyo-e patterns per category)
+    // =====================================================================
+    const CARD_BANNERS = {
+      sports: `<svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="80" fill="#0F2D37"/>
+        <circle cx="320" cy="-10" r="60" fill="#E45226" opacity="0.8"/>
+        <path d="M0,60 Q50,30 100,50 Q150,70 200,45 Q250,20 300,55 Q350,75 400,40 L400,80 L0,80Z" fill="#1E6D67"/>
+        <path d="M0,70 Q80,50 160,65 Q240,80 320,60 Q380,45 400,55 L400,80 L0,80Z" fill="#7CC5B3" opacity="0.6"/>
+        <text x="16" y="28" fill="#F3AA20" font-family="Anton,sans-serif" font-size="14" letter-spacing="3" text-transform="uppercase" opacity="0.5">⚽ SPORTS &amp; RIADAH</text>
+      </svg>`,
+      tech: `<svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="80" fill="#0F2D37"/>
+        <line x1="0" y1="20" x2="400" y2="20" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="0" y1="40" x2="400" y2="40" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="0" y1="60" x2="400" y2="60" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="80" y1="0" x2="80" y2="80" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="160" y1="0" x2="160" y2="80" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="240" y1="0" x2="240" y2="80" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <line x1="320" y1="0" x2="320" y2="80" stroke="#1E6D67" stroke-width="0.5" opacity="0.4"/>
+        <rect x="300" y="10" width="80" height="20" rx="3" fill="#E45226" opacity="0.7"/>
+        <rect x="20" y="50" width="60" height="16" rx="3" fill="#F3AA20" opacity="0.5"/>
+        <circle cx="200" cy="40" r="18" fill="none" stroke="#7CC5B3" stroke-width="1.5" opacity="0.4"/>
+        <text x="16" y="28" fill="#7CC5B3" font-family="JetBrains Mono,monospace" font-size="11" letter-spacing="2" opacity="0.6">&lt;/&gt; TECH &amp; CODING</text>
+      </svg>`,
+      arts: `<svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="80" fill="#E45226"/>
+        <circle cx="60" cy="40" r="30" fill="#F3AA20" opacity="0.6"/>
+        <circle cx="140" cy="30" r="20" fill="#0F2D37" opacity="0.3"/>
+        <circle cx="340" cy="50" r="40" fill="#F3AA20" opacity="0.4"/>
+        <path d="M0,70 Q100,40 200,65 Q300,90 400,55 L400,80 L0,80Z" fill="#0F2D37" opacity="0.5"/>
+        <text x="16" y="24" fill="#FFF8ED" font-family="Anton,sans-serif" font-size="14" letter-spacing="3" opacity="0.7">🎭 ARTS &amp; KEBUDAYAAN</text>
+      </svg>`,
+      volunteer: `<svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="80" fill="#1E6D67"/>
+        <path d="M0,40 Q40,10 80,40 Q120,70 160,40 Q200,10 240,40 Q280,70 320,40 Q360,10 400,40 L400,80 L0,80Z" fill="#0F2D37" opacity="0.4"/>
+        <circle cx="350" cy="25" r="20" fill="#F3AA20" opacity="0.6"/>
+        <path d="M345,20 L350,12 L355,20 L365,22 L358,28 L360,38 L350,33 L340,38 L342,28 L335,22Z" fill="#FFF8ED" opacity="0.5"/>
+        <text x="16" y="28" fill="#FFF8ED" font-family="Anton,sans-serif" font-size="14" letter-spacing="3" opacity="0.6">🤝 VOLUNTEER &amp; BIRO</text>
+      </svg>`,
+      default: `<svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="80" fill="#0F2D37"/>
+        <circle cx="360" cy="0" r="50" fill="#E45226" opacity="0.3"/>
+        <path d="M0,50 Q100,20 200,50 Q300,80 400,40 L400,80 L0,80Z" fill="#1E6D67" opacity="0.5"/>
+        <path d="M0,65 Q150,45 300,70 Q380,78 400,65 L400,80 L0,80Z" fill="#7CC5B3" opacity="0.4"/>
+        <text x="16" y="28" fill="#F3AA20" font-family="Anton,sans-serif" font-size="14" letter-spacing="3" opacity="0.5">🏛️ CAMPUS QUEST</text>
+      </svg>`
+    };
+
+    function getCategoryBanner(title, org) {
+      const t = ((title || '') + ' ' + (org || '')).toLowerCase();
+      if (/futsal|sukan|sport|rugby|badminton|bola|tournament|lari|run|gym|swim|hiking|riadah/i.test(t)) return CARD_BANNERS.sports;
+      if (/code|coding|tech|hack|web|app|dev|figma|ai|robot|data|cyber|iot|workshop.*tech|programming/i.test(t)) return CARD_BANNERS.tech;
+      if (/art|seni|budaya|tari|nyanyi|teater|drama|muzik|fest|culture|raya|malam|pesta|carnival/i.test(t)) return CARD_BANNERS.arts;
+      if (/volunteer|sukarela|biro|urusetia|gotong|bakti|derma|community|kebajikan|charity/i.test(t)) return CARD_BANNERS.volunteer;
+      return CARD_BANNERS.default;
+    }
+
+    // =====================================================================
+    // ROBUST CSV PARSER (RFC 4180 compliant)
+    // =====================================================================
     function parseCSV(text) {
       const lines = [];
-      let row = [];
-      let inQuotes = false;
-      let curr = '';
-
+      let row = [], inQuotes = false, curr = '';
       for (let i = 0; i < text.length; i++) {
-        const c = text[i];
-        const next = text[i + 1];
-
+        const c = text[i], next = text[i + 1];
         if (c === '"') {
-          if (inQuotes && next === '"') {
-            curr += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
+          if (inQuotes && next === '"') { curr += '"'; i++; }
+          else inQuotes = !inQuotes;
         } else if (c === ',' && !inQuotes) {
-          row.push(curr.trim());
-          curr = '';
+          row.push(curr.trim()); curr = '';
         } else if ((c === '\r' || c === '\n') && !inQuotes) {
           if (c === '\r' && next === '\n') i++;
           row.push(curr.trim());
           if (row.length > 1 || row[0] !== '') lines.push(row);
-          row = [];
-          curr = '';
-        } else {
-          curr += c;
-        }
+          row = []; curr = '';
+        } else { curr += c; }
       }
-      if (curr || row.length > 0) {
-        row.push(curr.trim());
-        lines.push(row);
-      }
-
+      if (curr || row.length > 0) { row.push(curr.trim()); lines.push(row); }
       if (lines.length < 2) return [];
-
       const headers = lines[0].map(h => h.toLowerCase().replace(/[\s_\/]+/g, ''));
       return lines.slice(1).map(r => {
         const obj = {};
-        headers.forEach((h, idx) => {
-          obj[h] = r[idx] || '';
-        });
+        headers.forEach((h, idx) => { obj[h] = r[idx] || ''; });
         return obj;
       });
     }
 
-    // Helper: Parse Date into Year, Month, Day reliably (handles M/D/YYYY and YYYY-MM-DD)
+    // =====================================================================
+    // DATE & TIME HELPERS
+    // =====================================================================
     function parseDateParts(dateStr) {
       if (!dateStr) return null;
       const parts = dateStr.trim().split(/[-/]/);
       if (parts.length !== 3) return null;
-
       let y, m, d;
-      if (parts[0].length === 4) {
-        y = parseInt(parts[0], 10);
-        m = parseInt(parts[1], 10);
-        d = parseInt(parts[2], 10);
-      } else {
-        m = parseInt(parts[0], 10);
-        d = parseInt(parts[1], 10);
-        y = parseInt(parts[2], 10);
-      }
+      if (parts[0].length === 4) { y = parseInt(parts[0]); m = parseInt(parts[1]); d = parseInt(parts[2]); }
+      else { m = parseInt(parts[0]); d = parseInt(parts[1]); y = parseInt(parts[2]); }
       return { y, m, d };
     }
-
-    // Helper: Calculate Day of Week from Date String
     function getDayOfWeek(dateStr) {
       const p = parseDateParts(dateStr);
       if (p) {
         const dt = new Date(p.y, p.m - 1, p.d);
-        if (!isNaN(dt.getTime())) {
-          return dt.toLocaleDateString('en-US', { weekday: 'long' });
-        }
+        if (!isNaN(dt.getTime())) return dt.toLocaleDateString('en-US', { weekday: 'long' });
       }
       return 'General';
     }
-
-    // Helper: Parse Time String (e.g. "6:55:00 AM" or "2:30 PM - 5:30 PM") into start & end hours/minutes
     function parseTimes(timeStr) {
       let startH = 9, startM = 0, endH = 11, endM = 0;
       if (!timeStr) return { startH, startM, endH, endM };
-
       const timeMatches = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/gi);
       if (timeMatches && timeMatches.length > 0) {
         const parseOne = (t) => {
           const m = t.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
           if (!m) return null;
-          let h = parseInt(m[1], 10);
-          const min = parseInt(m[2], 10);
-          const ampm = m[3] ? m[3].toUpperCase() : '';
-          if (ampm === 'PM' && h < 12) h += 12;
-          if (ampm === 'AM' && h === 12) h = 0;
+          let h = parseInt(m[1]); const min = parseInt(m[2]); const ap = m[3] ? m[3].toUpperCase() : '';
+          if (ap === 'PM' && h < 12) h += 12; if (ap === 'AM' && h === 12) h = 0;
           return { h, min };
         };
-
         const t1 = parseOne(timeMatches[0]);
-        if (t1) {
-          startH = t1.h;
-          startM = t1.min;
-          endH = (startH + 2) % 24;
-          endM = startM;
-        }
-
-        if (timeMatches.length > 1) {
-          const t2 = parseOne(timeMatches[1]);
-          if (t2) {
-            endH = t2.h;
-            endM = t2.min;
-          }
-        }
+        if (t1) { startH = t1.h; startM = t1.min; endH = (startH + 2) % 24; endM = startM; }
+        if (timeMatches.length > 1) { const t2 = parseOne(timeMatches[1]); if (t2) { endH = t2.h; endM = t2.min; } }
       }
       return { startH, startM, endH, endM };
     }
-
-    // Pad number helper
     const pad = (n) => String(n).padStart(2, '0');
 
-    // Fetch and Sync Data from Google Sheet
+    function formatDate(dateStr) {
+      const p = parseDateParts(dateStr);
+      if (!p) return dateStr;
+      const dt = new Date(p.y, p.m - 1, p.d);
+      if (isNaN(dt.getTime())) return dateStr;
+      return dt.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // =====================================================================
+    // DATA FETCH & INIT
+    // =====================================================================
     async function init() {
       const syncText = document.getElementById('syncText');
-
       try {
-        syncText.textContent = 'Syncing live quests...';
+        syncText.textContent = 'SYNCING LIVE QUESTS...';
         const res = await fetch(GOOGLE_SHEET_CSV_URL);
         if (res.ok) {
           const csvText = await res.text();
           const parsed = parseCSV(csvText);
-
-          // Filter ONLY APPROVED events
           allEvents = parsed
-            .filter(row => {
-              const status = (row.status || '').trim().toUpperCase();
-              return status === 'APPROVED';
-            })
+            .filter(row => (row.status || '').trim().toUpperCase() === 'APPROVED')
             .map((row, idx) => {
               const dateVal = (row.date || '').trim();
               const dayVal = row.day || getDayOfWeek(dateVal);
@@ -739,122 +1108,30 @@
                 registration_url: row.registrationlink || row.registrationurl || row.link || 'https://forms.google.com'
               };
             });
-
-          syncText.textContent = `🟢 Live Sheet Synced (${allEvents.length} Quests)`;
+          syncText.textContent = `🟢 LIVE · ${allEvents.length} QUESTS SYNCED`;
           render();
           return;
         }
-      } catch (err) {
-        console.warn("Could not sync with Google Sheet, loading fallback data.", err);
-      }
-
-      // Fallback
+      } catch (err) { console.warn("Sheet sync failed, loading fallback.", err); }
       loadFallbackData();
     }
 
     function loadFallbackData() {
       allEvents = [
-        {
-          id: "sq-1",
-          title: "Figma to Code: UI/UX Masterclass",
-          organizer: "Google Developer Student Club (GDSC)",
-          day: "Wednesday",
-          date: "11/25/2026",
-          time: "2:30 PM – 5:30 PM",
-          venue: "Faculty Lab 2",
-          description: "Learn rapid UI prototyping in Figma and convert wireframes into working code.",
-          badges: ["📜 E-Certificate", "🍔 Free Refreshments", "🎖️ Activity Merit"],
-          registration_url: "https://forms.google.com"
-        },
-        {
-          id: "sq-2",
-          title: "Campus 3v3 Futsal Blitz Tournament",
-          organizer: "Student Sports Council",
-          day: "Thursday",
-          date: "11/26/2026",
-          time: "8:00 PM – 11:00 PM",
-          venue: "Sports Complex Court B",
-          description: "Quick 3v3 knockout tournament. Medals, cash prizes, and merchandise for winners.",
-          badges: ["🏆 Prizes", "🎟️ Free Entry", "🎖️ Activity Merit"],
-          registration_url: "https://forms.google.com"
-        }
+        { id:"sq-1", title:"Figma to Code: UI/UX Masterclass", organizer:"Google Developer Student Club (GDSC)", day:"Wednesday", date:"11/25/2026", time:"2:30 PM – 5:30 PM", venue:"Faculty Lab 2, FTSM", description:"Learn rapid UI prototyping in Figma and convert wireframes into working Flutter code. Laptop required.", badges:["📜 E-Certificate","🍔 Free Refreshments","🎖️ Activity Merit"], registration_url:"https://forms.google.com" },
+        { id:"sq-2", title:"Campus 3v3 Futsal Blitz Tournament", organizer:"Student Sports Council UKM", day:"Thursday", date:"11/26/2026", time:"8:00 PM – 11:00 PM", venue:"Sports Complex Court B", description:"Quick 3v3 knockout tournament. Medals, cash prizes, and i-Star merit for participants.", badges:["🏆 Prizes","🎟️ Free Entry","🎖️ Activity Merit"], registration_url:"https://forms.google.com" },
+        { id:"sq-3", title:"Malam Apresiasi Kolej KIY 2026", organizer:"MEP Kolej Ibrahim Yaakub (KIY)", day:"Friday", date:"11/27/2026", time:"8:00 PM – 10:30 PM", venue:"Dewan Kolej KIY", description:"Malam penghargaan urusetia dan pelajar aktif. Persembahan budaya, cabutan bertuah, dan jamuan makan.", badges:["🍔 Free Food","📜 E-Certificate","🎖️ Activity Merit","🎟️ Free Entry"], registration_url:"https://forms.google.com" },
+        { id:"sq-4", title:"Gotong-Royong Perdana UKM", organizer:"Sekretariat Kesukarelawanan UKM", day:"Saturday", date:"11/28/2026", time:"7:30 AM – 12:00 PM", venue:"Padang Kawad UKM", description:"Program bersih pantai dan tanaman pokok di sekitar kampus. Bas disediakan dari Foyer Pusanika.", badges:["🎖️ Activity Merit","🍔 Free Refreshments","🎟️ Free Entry"], registration_url:"https://forms.google.com" },
+        { id:"sq-5", title:"Python for Data Science Workshop", organizer:"Persatuan Mahasiswa Sains Komputer", day:"Monday", date:"11/23/2026", time:"10:00 AM – 1:00 PM", venue:"Makmal Komputer 3, FTSM Aras 2", description:"Hands-on workshop using Python pandas and matplotlib for beginners. Bring your laptop.", badges:["📜 E-Certificate","🍔 Free Refreshments"], registration_url:"https://forms.google.com" },
+        { id:"sq-6", title:"Debat Piala Naib Canselor 2026", organizer:"KMUKM", day:"Tuesday", date:"11/24/2026", time:"9:00 AM – 5:00 PM", venue:"Dewan DECTAR, Pusanika Aras 5", description:"Pertandingan debat antara fakulti peringkat universiti. Terbuka kepada semua kolej kediaman.", badges:["🎖️ Activity Merit","📜 E-Certificate","🍔 Free Food"], registration_url:"https://forms.google.com" }
       ];
-      document.getElementById('syncText').textContent = 'Live Sheet Synced';
+      document.getElementById('syncText').textContent = '🟢 LIVE · ' + allEvents.length + ' QUESTS SYNCED';
       render();
     }
 
-    // Open Smart Calendar Modal
-    function openCalModal(eventId) {
-      const ev = allEvents.find(e => e.id === eventId);
-      if (!ev) return;
-      selectedCalEvent = ev;
-
-      document.getElementById('calModalEventName').textContent = `Syncing "${ev.title}" to your calendar:`;
-
-      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
-      const t = parseTimes(ev.time);
-
-      const dStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
-      const dEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
-
-      const title = encodeURIComponent(`${ev.title} (Sidequestki)`);
-      const details = encodeURIComponent(
-        `${ev.description}\n\nOrganizer: ${ev.organizer}\nRegistration: ${ev.registration_url}\nCurated by Sidequestki.`
-      );
-      const location = encodeURIComponent(ev.venue);
-
-      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dStart}/${dEnd}&details=${details}&location=${location}`;
-      document.getElementById('btnGCal').href = gcalUrl;
-
-      document.getElementById('calModal').style.display = 'flex';
-    }
-
-    function closeCalModal() {
-      document.getElementById('calModal').style.display = 'none';
-      selectedCalEvent = null;
-    }
-
-    // Download .ics file for Apple / Outlook / Mobile
-    function downloadICal() {
-      if (!selectedCalEvent) return;
-      const ev = selectedCalEvent;
-      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
-      const t = parseTimes(ev.time);
-
-      const dtStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
-      const dtEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
-
-      const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Sidequestki//Campus Quest Board//EN',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        `SUMMARY:${ev.title} (Sidequestki)`,
-        `DESCRIPTION:${ev.description.replace(/\n/g, '\\n')} - Register: ${ev.registration_url}`,
-        `LOCATION:${ev.venue}`,
-        `DTSTART:${dtStart}`,
-        `DTEND:${dtEnd}`,
-        'BEGIN:VALARM',
-        'TRIGGER:-PT1H',
-        'ACTION:DISPLAY',
-        'DESCRIPTION:Sidequest Reminder (Starting in 1 hour)',
-        'END:VALARM',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-
-      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `${ev.title.replace(/[^a-z0-9]/gi, '_')}.ics`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      closeCalModal();
-    }
-
-    // Render Cards
+    // =====================================================================
+    // RENDER CARDS
+    // =====================================================================
     function render() {
       const container = document.getElementById('questsContainer');
       const emptyState = document.getElementById('emptyState');
@@ -863,98 +1140,85 @@
       const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
 
       const filtered = allEvents.filter(ev => {
-        // Day filter
         if (activeDay !== 'all') {
-          if (activeDay === 'today') {
-            if ((ev.day || '').toLowerCase() !== todayName.toLowerCase()) return false;
-          } else if ((ev.day || '').toLowerCase() !== activeDay.toLowerCase()) {
-            return false;
-          }
+          if (activeDay === 'today') { if ((ev.day||'').toLowerCase() !== todayName.toLowerCase()) return false; }
+          else if ((ev.day||'').toLowerCase() !== activeDay.toLowerCase()) return false;
         }
-
-        // Loot filter
         if (activeLoot !== 'all') {
-          if (!ev.badges || !ev.badges.some(b => b.toLowerCase().includes(activeLoot.toLowerCase()))) {
-            return false;
-          }
+          if (!ev.badges || !ev.badges.some(b => b.toLowerCase().includes(activeLoot.toLowerCase()))) return false;
         }
-
-        // Search query
         if (searchQuery) {
           const q = searchQuery.toLowerCase();
-          const matchTitle = (ev.title || '').toLowerCase().includes(q);
-          const matchOrg = (ev.organizer || '').toLowerCase().includes(q);
-          const matchVenue = (ev.venue || '').toLowerCase().includes(q);
-          const matchDesc = (ev.description || '').toLowerCase().includes(q);
-          if (!matchTitle && !matchOrg && !matchVenue && !matchDesc) return false;
+          if (!(ev.title||'').toLowerCase().includes(q) && !(ev.organizer||'').toLowerCase().includes(q) &&
+              !(ev.venue||'').toLowerCase().includes(q) && !(ev.description||'').toLowerCase().includes(q)) return false;
         }
-
         return true;
       });
 
-      if (filtered.length === 0) {
-        emptyState.style.display = 'block';
-        return;
-      }
+      if (filtered.length === 0) { emptyState.style.display = 'block'; return; }
       emptyState.style.display = 'none';
 
-      // Group by Day
-      const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'General'];
+      const daysOrder = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','General'];
       const grouped = {};
-      filtered.forEach(ev => {
-        const d = ev.day || 'General';
-        if (!grouped[d]) grouped[d] = [];
-        grouped[d].push(ev);
-      });
+      filtered.forEach(ev => { const d = ev.day || 'General'; if (!grouped[d]) grouped[d] = []; grouped[d].push(ev); });
 
-      // Render day sections
       daysOrder.forEach(day => {
         if (!grouped[day] || grouped[day].length === 0) return;
 
         const dayHeader = document.createElement('div');
         dayHeader.className = 'day-header';
-        dayHeader.innerHTML = `<span>📅 ${day}</span>`;
+        dayHeader.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sunset-vermilion)" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${day}`;
         container.appendChild(dayHeader);
 
-        grouped[day].forEach(ev => {
+        grouped[day].forEach((ev, i) => {
           const card = document.createElement('div');
           card.className = 'quest-card';
+          card.style.animationDelay = `${i * 0.06}s`;
 
           const badgesHtml = (ev.badges || []).map(b => {
-            let cls = '';
+            let cls = 'badge-default';
             const bl = b.toLowerCase();
             if (bl.includes('food') || bl.includes('makan') || bl.includes('refreshment')) cls = 'badge-food';
             else if (bl.includes('merit') || bl.includes('star')) cls = 'badge-merit';
             else if (bl.includes('cert') || bl.includes('sijil')) cls = 'badge-cert';
+            else if (bl.includes('free') || bl.includes('prize')) cls = 'badge-free';
             return `<span class="badge ${cls}">${b}</span>`;
           }).join('');
 
           card.innerHTML = `
-            <div class="card-top">
-              <div>
-                <span class="organizer-tag">${ev.organizer}</span>
-                <h3 class="quest-title">${ev.title}</h3>
+            <div class="card-banner">${getCategoryBanner(ev.title, ev.organizer)}</div>
+            <div class="card-body">
+              <div class="organizer-tag">${ev.organizer}</div>
+              <h3 class="quest-title">${ev.title}</h3>
+              <div class="info-row">
+                <span class="info-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E45226" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  ${ev.time}
+                </span>
+                <span class="info-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E6D67" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  ${ev.venue}
+                </span>
+                <span class="info-chip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F3AA20" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  ${formatDate(ev.date)}
+                </span>
               </div>
-            </div>
-
-            <div class="itinerary-row">
-              <span class="info-item">⏰ <strong>Time:</strong>&nbsp;${ev.time}</span>
-              <span class="info-item">📍 <strong>Port / Venue:</strong>&nbsp;${ev.venue}</span>
-            </div>
-
-            <p class="quest-desc">${ev.description}</p>
-
-            <div class="badges-row">
-              ${badgesHtml}
-            </div>
-
-            <div class="card-actions">
-              <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register">
-                Accept Quest (Register) &rarr;
-              </a>
-              <button onclick="openCalModal('${ev.id}')" class="btn-cal" title="Add to Calendar">
-                📅 Add to Calendar
-              </button>
+              <p class="quest-desc">${ev.description}</p>
+              <div class="badges-row">${badgesHtml}</div>
+              <div class="card-actions">
+                <a href="${ev.registration_url}" target="_blank" rel="noopener" class="btn-register">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  ACCEPT QUEST →
+                </a>
+                <button onclick="openCalModal('${ev.id}')" class="btn-cal" title="Add to Calendar">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  CAL
+                </button>
+                <button onclick="copyQuestLink('${ev.id}')" class="btn-share-card" title="Copy Quest Link">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                </button>
+              </div>
             </div>
           `;
           container.appendChild(card);
@@ -962,7 +1226,97 @@
       });
     }
 
-    // Filter Listeners
+    // =====================================================================
+    // CALENDAR MODAL & ICS DOWNLOAD
+    // =====================================================================
+    function openCalModal(eventId) {
+      const ev = allEvents.find(e => e.id === eventId);
+      if (!ev) return;
+      selectedCalEvent = ev;
+      document.getElementById('calModalEventName').textContent = `Syncing "${ev.title}" to your calendar:`;
+      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
+      const t = parseTimes(ev.time);
+      const dStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
+      const dEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
+      const title = encodeURIComponent(`${ev.title} (Sidequestki)`);
+      const details = encodeURIComponent(`${ev.description}\n\nOrganizer: ${ev.organizer}\nRegistration: ${ev.registration_url}\nCurated by Sidequestki.`);
+      const location = encodeURIComponent(ev.venue);
+      document.getElementById('btnGCal').href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dStart}/${dEnd}&details=${details}&location=${location}`;
+      document.getElementById('calModal').style.display = 'flex';
+    }
+    function closeCalModal() { document.getElementById('calModal').style.display = 'none'; selectedCalEvent = null; }
+
+    function downloadICal() {
+      if (!selectedCalEvent) return;
+      const ev = selectedCalEvent;
+      const pDate = parseDateParts(ev.date) || { y: 2026, m: 11, d: 25 };
+      const t = parseTimes(ev.time);
+      const dtStart = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.startH)}${pad(t.startM)}00`;
+      const dtEnd = `${pDate.y}${pad(pDate.m)}${pad(pDate.d)}T${pad(t.endH)}${pad(t.endM)}00`;
+      const ics = [
+        'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sidequestki//Campus Quest Board//EN','CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',`SUMMARY:${ev.title} (Sidequestki)`,
+        `DESCRIPTION:${ev.description.replace(/\n/g,'\\n')} - Register: ${ev.registration_url}`,
+        `LOCATION:${ev.venue}`,`DTSTART:${dtStart}`,`DTEND:${dtEnd}`,
+        'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Sidequest starts in 1 hour!','END:VALARM',
+        'END:VEVENT','END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', `${ev.title.replace(/[^a-z0-9]/gi, '_')}.ics`);
+      document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      closeCalModal();
+    }
+
+    // =====================================================================
+    // SHARE / COPY LINK
+    // =====================================================================
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    function copyBoardLink() {
+      navigator.clipboard.writeText(BOARD_URL).then(() => {
+        showToast("LINK COPIED! SHARE TO YOUR KOLEJ WHATSAPP GROUP 🏛️");
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea'); ta.value = BOARD_URL;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast("LINK COPIED! SHARE TO YOUR KOLEJ WHATSAPP GROUP 🏛️");
+      });
+    }
+
+    function copyQuestLink(questId) {
+      const url = BOARD_URL + '#' + questId;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast("QUEST LINK COPIED! SEND TO YOUR FRIENDS ⚔️");
+      }).catch(() => {
+        const ta = document.createElement('textarea'); ta.value = url;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast("QUEST LINK COPIED! SEND TO YOUR FRIENDS ⚔️");
+      });
+    }
+
+    // =====================================================================
+    // MODALS
+    // =====================================================================
+    function openSubmitModal() { document.getElementById('submitModal').style.display = 'flex'; }
+    function closeSubmitModal() { document.getElementById('submitModal').style.display = 'none'; }
+
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('submitModal')) closeSubmitModal();
+      if (e.target === document.getElementById('calModal')) closeCalModal();
+    });
+
+    // =====================================================================
+    // FILTER LISTENERS
+    // =====================================================================
     document.getElementById('dayPills').addEventListener('click', (e) => {
       if (e.target.classList.contains('pill')) {
         document.querySelectorAll('#dayPills .pill').forEach(p => p.classList.remove('active'));
@@ -973,10 +1327,11 @@
     });
 
     document.getElementById('lootPills').addEventListener('click', (e) => {
-      if (e.target.classList.contains('pill')) {
+      if (e.target.closest('.pill')) {
+        const pill = e.target.closest('.pill');
         document.querySelectorAll('#lootPills .pill').forEach(p => p.classList.remove('active'));
-        e.target.classList.add('active');
-        activeLoot = e.target.getAttribute('data-loot');
+        pill.classList.add('active');
+        activeLoot = pill.getAttribute('data-loot');
         render();
       }
     });
@@ -986,15 +1341,9 @@
       render();
     });
 
-    // Modals
-    function openSubmitModal() { document.getElementById('submitModal').style.display = 'flex'; }
-    function closeSubmitModal() { document.getElementById('submitModal').style.display = 'none'; }
-
-    window.onclick = function(event) {
-      if (event.target === document.getElementById('submitModal')) closeSubmitModal();
-      if (event.target === document.getElementById('calModal')) closeCalModal();
-    };
-
+    // =====================================================================
+    // LAUNCH
+    // =====================================================================
     init();
   </script>
 </body>
